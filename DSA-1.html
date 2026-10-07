@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f0f0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="DSA">
+<title>DSA</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2215%22%20fill%3D%22%236d4aff%22/%3E%3Cg%20stroke%3D%22%23fff%22%20stroke-width%3D%223.2%22%20stroke-linecap%3D%22round%22%3E%3Cline%20x1%3D%2232%22%20y1%3D%2219%22%20x2%3D%2219%22%20y2%3D%2244%22/%3E%3Cline%20x1%3D%2232%22%20y1%3D%2219%22%20x2%3D%2245%22%20y2%3D%2244%22/%3E%3C/g%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2218%22%20r%3D%227%22%20fill%3D%22%23fff%22/%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2245%22%20r%3D%226%22%20fill%3D%22%23ffd166%22/%3E%3Ccircle%20cx%3D%2245%22%20cy%3D%2245%22%20r%3D%226%22%20fill%3D%22%23fff%22/%3E%3C/svg%3E%0A">
+<link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAABmJLR0QA/wD/AP+gvaeTAAAUuklEQVR4nO3deXSV1bnH8e9+MwFJmEIIMkNAJsUBrCIC0gHDkFREbO3tINcWqRLBttcO19Xi7WpXq7ZKQIss22LtYJVelUBAeivIoLUUEFsZZQgghABhDGQ8+/7xCgQ45LzvOe+YPJ+1XEKy8+5n6fnlnPecvZ+tCJCpQ3RKy2wGRBRXA1ej6I+mD4oMDekK2gHpQKrPpYroqoATDf45omArik2GZlPbdDbPelXV+FvixZSfk0+erJM6nWUImtFEGI3iNswHuGiaalG8h2aREWHR7GVqm98F+RKAGXn6pnrFV5TiXqCDHzWIQNiuNa9G6nn+ueVqnx8FeBaAqZ/VbVJTeADFfQoGeDWvCIU6FK8DRXOWqNVeTux6AL6drztU1zFTKaYDbdyeT4TeOq353tyl6i0vJnMtAI8W6MyqOh7T8BDyul7YpGCx1nx3zlK12eV5nDd9vJ6M5mkFXdy4vmg26lDMS6vle08tV5VuTOBoAKbn616qjl+huMPJ64pmTvGRgq8VLVHvOH9phxSO13eh+TXQ1qlrCtFAPZqnsjL4oZOfJSQcgMKxOg3FE0ChE9cTolGad+sVdz1XosqcuFxCD9hpY3THlGSKgU85UYwQFu3FoGDOYrUp0QsZ8f7gzDzdMyWZ1ciDX3ivO5o108fqOxO9UFwBeOgOPajeYDVwdaIFCBEXTYZSLCwcq7+ayGVsvwSaPk5fq+BtzIVpQvitXsGUohL1Ujw/bCsAM/N0z3rFWhSd45lMCJdEgPvnlKgFdn/QcgC+na871NSzBuhndxIhPBDRmklzl6rX7fyQpQB88lbnKuSGVwRbZSSJkc8Wqw1Wf8DaTbDBU8iDXwRfulHP4gfH6G5WfyDmM8D0cXqSgoWJ1SWEpzaiGTZnqaqONbDRZ4Dp+bqXghecq0sIT9zwyeqEmBp/CRRhLrK2R4RT4fTxuiDWoCu+BJo+Xk9WmlecrUkITx1Oque6Z95UB680IOozwKMFOhPN0+7VJYQnsiNJzG5sQNQAVNXxmGxmEU2BhsmFY/WYK33/spdAD03UWUYNe9BkuFuaEB5RfESEa6K9K3TZM4Cq4hF58IsmRdNHKb4V7VsXPQMUjtWtUZQi7/yIpudEUio9n3ldHW/4xYueATRMQx78omlqU1/D9Eu/eFEAlGKKd/UI4blHHi3QmQ2/cD4AM/L0TUB/z0sSwjvtz9TyzYZfOB+ASBIJ7awRIhQUD4A+f+9rgNmlGc0X/KtKCG8o6F04lpHn/m4AdDrLECDbt6qE8JLi/nN/TAZAM9q3YpqB5BToNQD6DobOPSGnK2S2g7QW5verq+BkBZR/DAf2wI5NsHsr1NX6WXWTNmlqvp42v1idOReAT/tcUJPUrQ8MHws3jICWjbQHbpVh/tOpOwweBnn3wtlK2Lga1pbAvp3e1dxMtGpRy+1AiZo1WaceraQC6eDsmG65kH8f9L/RmettWQ+LFsDHu5y5ngAUc+csUYXJRyrpp+TB74iUVCiYAiMmgBF3y7HLDRgC/a6HVcVQ/CLUBuqUrZDSjAcKVeFYfTeKV/2uJ+w6doX//L75Gt9NH++G3/wUDh9wd57mwEiih6EMaXOSqO5Xw8wn3H/wA3TpBd/+pXlTLRITiXCtobUEIBE9+kHhTyHDw8OfWmXCgz+GHtKYMlHXGEBvv6sIq45dYdrjkNbS+7nTWppzZ0uPvkRcawCt/a4ijFJSYcp3IT0z9li3pLeG+//brEXEQZMrAYhTwRToEoDnzs49YcLX/K4itNoagI+/w8KpW675VmdQjCoIRhhDqK0Bsv3Rrvz7nH2fP1GGAfmyljce7QxAXkHa0K2Pc5/wOmnAUOia63cVoZMWoN9j4TB8rN8VRKcU3JrndxXhIwGwITnFXNgWVDeOhKRkv6sIFwmADb0HNr6q02+tMqCnbGq1RQJgQ59r/a4gtquv87uCcJEA2BCGtxq79PK7gnCRANjQMQTLDmRphD0SABsyQ9AyrLUcXmuLBMAGPxa92RWGGoNEAiCaNQmADdVn/a4gtqozflcQLhIAG04djz3Gb2GoMUgkADaUf+x3BbGFocYgkQDY8PFuvyuI7UAIagwSCYANOz7wu4LYtm/yu4JwkQDYsHuL2bEtqM6cgj3b/K4iXCQANtTVmu0Kg2rDaqiv87uKcJEA2LS2xO8KotMa1i71u4rwkQDYtG+n2aszaD5cJ71D4yEBiMMbv4FIvd9VXBCphyW/87uKcJIAxOHAHrNRbVCsfCMcb9EGkQQgTsUvwv4A9O0/sBuWvOR3FeElAYhTbQ389mdQedK/Gk6fgBd+Iu3SEyEBSMDhAzDvR/4skqs+C/NmwZGD3s/dlEgAElS6Heb8wPxt7JUzp+C5x2Dvdu/mbKokAA7Yux2e/g6cOOr+XMePwFOPmIfoicRJABxyogJUkvvzJKfIkmcnSQAcMiofWnuwZzijDYwY7/48zYUEwAEt0+Ezk7yb73P3mE2wROIkAA4YPdE8tsiKPVvhYClUnjIXrtXXmX8+WGp+z4qW6XD7nfHXKy6QTpIJSm8Nt3/e2ti9O8ybZa2vPOZbv7DW3nD0nbB6sdwPJEqeARI05h5o0cra2OIFjT/4AUp+b+1aaS29fdnVVEkAEtC6PQwfZ23szg9h2/uxx23daH3n2YgJ0LaDtbEiOglAAvLuhdQ0a2MX21itaXVtT0qq+Qwk4icBiFP7HBg2xtrYzetg57+tX3vXZtj8T2tjh90BWZ2sX1tcTAIQp3H/Ye0wCq3jW625aEHs+wUwaxj7JfvXFyYJQBw6doGht1sb+/5acxeZXQd2w6a11sYOHQ053ezPISQAcZnwVTAsLHuIRKy/qxPN4t9Z23lmGDDuy/HP05xJAGzq3AuuG25t7D9XwKF98c9V/jH8c6W1sdcPN88vFvZIAGwquM88kTGW+jpY+sfE5yv5g7VWJ0rB+K8kPl9zIwGwofdAGDjU2th334SjZYnPWXEI3l1ubezAmyD3msTnbE4kADZY/Q1bWwPLX3Fu3mV/gppqa2MnyInxtkgALOp/A/QdbG3s6sXmxhWnnKyw3pArdxD0u965uZs6CYBFVt9lqT4Lf/uL8/Mvf8X64Rf591m7TxESAEuuvcX6AdQrXndnhWblSbP/jxXd+8I1n3K+hqZIAhCDUtZ/+5+thJWvu1fLitfMDfFWTPiaPAtYIQGIYcgo64dP//UVOHPavVrOVlp/eXVVD7hxpHu1NBUSgEYYhrni04rTJ2D1EnfrAXi7GE4eszZ23JetfWLdnEkAGnHz56BjV2tjl/3JmwZZNVXmM40V2Z3h5s+4W0/YSQCuICkZxnzB2thjh+GdZe7W09CaEjh6yNrYvC+ZrVREdBKAK7htHGTlWBu77I/m6TFeqa+D5X+2NrZdNtya5249YSYBiCK1hdl6xIrDB+C9v7lbTzTv/RXK91sbm3evuYdYXE4CEMWofGjdztrYkt/7c1hGJGLed1ghzbSuTAJwCTtNrg6WwoZV7tbTmPVvWz8YQ5ppRScBuISdJleLX7S2bdEtWlvfcCPNtKKTADRgt8nVv//hbj1W/Ovv1jvKjb4TMj3oXxomEoAGnG5y5RVpphU/CcAn3Ghy5RVpphU/CcAn3Gpy5RVpphUfCQDuNrnyijTTio8EAPebXHlFmmnZ1+wD4EWTK69IMy37mn0AvGpy5RVppmVPsw6Al02uvCLNtOxp1gHwusmVV6SZlnXNNgB+NLnyijTTsq7ZBsCvJldekWZa1jTLAPjZ5Mor0kzLmmYZAL+bXHlFmmnF1uwCEIQmV16RZlqxNasABKnJlVekmVbjmlUAgtTkyivSTKtxqnBcUFa1Jy67Qzn9+26md4+PyMkuo33bCtLSqgCoqm5BWuv2JGd0gvQ+kDkIUrOjXuf0CXj8fm/6/HghtQX88AVr+5zras3eQ+c20VedhWPlcGg/7PoQtmyAIwfdrddLoQ+AYUS48bp1jLhlJb2677L3w61yocPt0GYoqAtPhgvnwapiZ+v026gCmPSAM9favcV8d2zDKnOJSJiFOgADrv6QuwteJjurPLELpeVA5y9C5kCOHYYff8PbPj9eSEqGx+Zb73VkRfl+WPg8bN3g3DW9lnRz31mz/C7CrtSUGu6Z+Acmjl9IeqvKxC9YXwnH34PaExQvHMCe7U2voaaOmMsjBt3k3DXTW8NNn4Y2WeYOOT/awyQqdDfBmRmnmDHtSYYNtbju146K1Qzr8yQZ6RbfNgmRzLZw6x3uXPvWPJjxhNl/KGxCFYDMjFPMmPok3TrvdW2Obl1KmflA0wpBZluY8XPo6uLKz+59YWYIQxCaAKSm1DBtShEdsy12hU1Ax+xDTLtvDikp4b8RSE2Daf9jvct1Ijp2hWmPm/uOwyI0AZhU8LKrv/kv1b1rKXdNCOEquEtMmubtmv/ufeGuqd7Nl6hQBKB/383uvOaPYfinVjGwXwB3wFvU/0brm/2dNHys9aXmfgt8AAwjwuTPW+wC64KJ41/FUOF7s9tIgsnf9G/+id8wt10GXeBLHDJ4XeLv8ycgJ7uM669d79v88Roy0jwhxi85XeH62/yb36rAB2DEsJV+l8DIW1f4XYJtIyb4XQGMzPe7gtgCHYDsDuX0tLu8wQW9uu8iq114dsVkd7a+5NtNvQY4+8mzGwIdgP59N/tdAgBK6cDUYkX/G/2uwKRUcGq5kkAHoHePj/wu4bzcnsGpJZbeA/2u4ILcQX5X0LhAB6BTx+C0YsgJUC2xdApQx7egd58LdADatqnwu4Tz2rUNTi2xtI2+zcEX7QJUSzSBDkCLNIt9PTzQIi08u2NaBOhESKsHjvgl0AEQwm2BDkBVtcUTKzxQVR2gX6sxVAXoycpqWxa/BDoAx0+097uE844dD04tsRw/7HcFFxwLUC3RBDoABw9d5XcJ55UdDs+RKge9WzQbU1nAO2oHOgC7S4PTu3vX7j5+l2DZ7gB9ZrfrQ78raFygA7BlxyC09r9Tk9aKLTsC/olOA1s2BOMIV63NWoIs0AE4cjSbPfssdrJy0e7SXCqOZfldhmVHDsKebX5XYT4TVbi/gS8hgQ4AwOp3R/tdAm+/438Ndq0OQF+jtwNQQyyBD8CGTUMpP+zfksKy8qvY9O+Ar+iKYsMqs2+PX8r2Wj+wz0+BD0BEGywsvte3+Rcu+iIRHfj/TJeJRMwOd35ZOC8cXeNC8X92644BvPOPEZ7Pu+bvo9i+MwAL6+O0dSO8s8z7edcsge2bvJ83HqEIAMBfir/A3v09PJuvdF8vXiuZ7Nl8bvnL87B3h3fzlW6D117wbr5EGUBwVpw1orYuhXkLCj25Hzh0uBPzFkyntjbF9bncVlsD837kzf3Aof0wb5Y5Z0hUG0BozkA5XZnJM8//F3v393RtjtJ9vZj9/HeoPJPh2hxeO30CnnkU9m53b47SbTD7UfNUmhA5lXRz31nfAELzJndNbRrrNt5CRsZpuncpdfTaa/4+ihf//HWqqsKz8M2qmmpYt8JsXdi9r7PXXrMEXnwi+AvfojikCsfp94BQng7Vr88W7i54mZzsxHZrlZVfxcJFXwz1Da8d/a6Hu79pti5JRNle892esNzwRvGBKhyn/wj49z5jggwV4YbB6xkxbAW9uu9CKWtrALRW7C7NZdW7o9n4ryGBWHLhJcOAG0aY7VN6DbB+NpjW5ie8qxbDxtXBWHIRLw2rVOFY/QMUP/G7GCdktTtC/76bye35ETk5B2nf9uj5XWVV1S2oOJbFofJO7NzThy07BoVqeYObsnLM7g25gyCnO7TveGFXWdUZqCiHQ/tg5ydHJAV9eYMNC1ThWJ2PYpHflQjhNQ3fNyKKD/wuRAg/KMV249kSVQrs9LsYITwXYasBoOBNv2sRwmOnqsvZYQBojQ8rRoTwj1asnr9e1RoAafW8BQSol4AQ7lIR3oJPFsM9tVxVovhff0sSwlMXAgCg4Nf+1SKEp8qybmYTNAhA0RJWoghPC2Qh4qTgT7NmmedeNdgPoDQQopXcQsRHa1469+eLN8RE+BUQnjbIQti3ec5StfHcXy4KwJyl6iSK2d7XJIRHNL9p+NfLtkRWVzObEG2SEcKGipYpzG/4hcsCMP//1AngF56VJIRHNBQ9sUidavi16JviNU8CAegtJoRjTtYrii79YtQAzFmqqhXMdL8mIbyhFLN/tUQdu/TrV2yLUlSiloF8OiyahL2ptfw82jca7QukkykEwnNCtBBRKHj4qeWqMtr3Gg3A3EXqgNZ8FQjxzk/RrGneLCpRb1zp2zE7w81dqpZqzVxnqxLCExVGMlMbG2CpNeLpszyq4X1nahLCE1orpswuVo0eGGUpAAtWqiqSGQ/42HBbCBsUv5y7RMVs9mC5Oe7cReqAUtwJRL2ZECJA1laX8X0rA211hy5aotarCPcA9XGVJYT7dtTWcdf89arWymDb7dGLlqkS4OtACI4/EM3MfiOJz85brsqt/kDc/QAfHqe/ouG3QFK81xDCQRWRekY++6aydTBr3AdkFJWolxR8CaiL9xpCOOQgBp+2++CHBE+IKSpRryi4G8XpRK4jRLw0bDGSuGXOYhVXj2pHWiLPyNODIwZvAD2duJ4QFr0TSaPg2dfU0Xgv4MgZYbOXqQ8iaQxFs9KJ6wkRgwaKstIZnciDHxx6Bjhn1mSdevQMP0LzXeTmWLijQiumWPmQywpXToV4aIIeZkR4EXD4MB7RzC0xkngw1vIGO1w7FuU7Y3R6dTI/BR4Ekt2aRzQLpQpmNLaqM16unws0c7weUK/5OZDv9lyiyTmlFM9UGfxsfrFy5Qg+zw7Geni8Hq01PyOkB/IJT1VoKKpXFEXbxugkz0+Gm5Gnb4sYFAITgfCfRC2co/iQCL9tmcL8S7s3uDelTx6ZoLvUax6IaO5WMMCvOoTvytC8DPyuYcc2rwTibNCHJ+i+aD4f0eQruAVI9bsm4RLFaQ2rVIS3IsmsyB7C++ca1fpTTsBMHaJT0q5ioIowWCuuQzNQQ3sFbYE2mP9u4XOZIroa4LSG4wpOAaeBHRq2KcX2SB3bsqvZNmulCsz6sf8HPmrXO9HOir8AAAAASUVORK5CYII=">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@500&display=swap">
+<style>
+/* Layout: YouTube watch page. Player + details on the left, lecture list on the right (stacked on phones). */
+:root{
+  --bg:#0f0f0f; --surface:#212121; --surface-2:#272727; --hover:#3f3f3f;
+  --fg:#f1f1f1; --muted:#aaaaaa; --line:#3a3a3a;
+  --red:#ff0033; --done:#3ea6ff;
+  --font:"Roboto",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --mono:"Roboto Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);-webkit-tap-highlight-color:transparent}
+body{min-height:100vh;padding-bottom:env(safe-area-inset-bottom,0px)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+button:focus-visible,input:focus-visible,.item:focus-visible{outline:2px solid var(--done);outline-offset:2px}
+svg{display:block}
+[hidden]{display:none!important}
+
+/* Top bar */
+.top{position:sticky;top:0;z-index:30;background:var(--bg);display:flex;align-items:center;gap:16px;padding:calc(8px + env(safe-area-inset-top,0px)) 16px 8px;height:auto}
+.logo{display:flex;align-items:center;gap:6px;font-weight:700;font-size:20px;letter-spacing:-.5px;flex:none}
+.logo svg{width:28px;height:28px;flex:none}
+.search{flex:1;max-width:560px;margin-inline:auto;display:flex;align-items:center;height:40px;border:1px solid var(--line);border-radius:40px;background:#121212;padding:0 6px 0 16px;min-width:0}
+.search input{flex:1;min-width:0;background:none;border:0;color:var(--fg);font:inherit;font-size:15px;outline:none}
+.search svg{fill:var(--muted);width:22px;height:22px;flex:none}
+.stat{flex:none;text-align:right;font-size:12px;color:var(--muted);line-height:1.3}
+.stat b{display:block;color:var(--fg);font-size:14px;font-variant-numeric:tabular-nums}
+
+/* Page grid */
+.page{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:24px;padding:8px 24px 40px;max-width:1750px;margin:0 auto}
+.main{min-width:0}
+.side{min-width:0}
+
+/* Player */
+.player-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.player-wrap iframe,#yt{position:absolute;inset:0;width:100%;height:100%;border:0}
+.tap{position:absolute;inset:0;z-index:2;touch-action:manipulation}
+.tap.through{pointer-events:none}
+.scrim{position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.75),rgba(0,0,0,0) 45%),rgba(0,0,0,.25);opacity:0;transition:opacity .2s}
+.player-wrap.ui .scrim{opacity:1}
+.paused-cover{position:absolute;left:0;right:0;bottom:0;height:38%;z-index:2;pointer-events:none;background:linear-gradient(to top,#000 55%,rgba(0,0,0,0));opacity:0;transition:opacity .2s}
+.player-wrap.is-paused .paused-cover{opacity:1}
+.player-wrap.ended .paused-cover{height:100%;background:#000}
+
+.ctrl{position:absolute;z-index:4;opacity:0;pointer-events:none;transition:opacity .2s}
+.player-wrap.ui .ctrl{opacity:1;pointer-events:auto}
+.center{inset:0;display:flex;align-items:center;justify-content:center;gap:clamp(28px,10vw,90px);pointer-events:none!important}
+.center button{pointer-events:auto;display:grid;place-items:center;border-radius:50%;background:rgba(0,0,0,.45)}
+.center .big{width:64px;height:64px}
+.center .big svg{width:40px;height:40px;fill:#fff}
+.center .sm{width:46px;height:46px}
+.center .sm svg{width:28px;height:28px;fill:#fff}
+.center button:disabled{opacity:.3}
+.player-wrap:not(.ui) .center button{pointer-events:none}
+
+.bar{left:0;right:0;bottom:0;padding:0 12px 6px}
+.row{display:flex;align-items:center;gap:6px;color:#fff;font-size:13px}
+.time{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.row .grow{flex:1}
+.pill{height:30px;padding:0 10px;border-radius:15px;font-weight:500;font-size:13px;background:rgba(255,255,255,.12)}
+.icon{width:38px;height:38px;display:grid;place-items:center}
+.icon svg{width:26px;height:26px;fill:#fff}
+.seek{position:relative;height:22px;display:flex;align-items:center;cursor:pointer;touch-action:none}
+.seek .track{position:absolute;left:0;right:0;height:3px;background:rgba(255,255,255,.3);border-radius:2px;transition:height .1s}
+.seek .buf{position:absolute;left:0;height:3px;background:rgba(255,255,255,.45);border-radius:2px}
+.seek .fill{position:absolute;left:0;height:3px;background:var(--red);border-radius:2px}
+.seek .knob{position:absolute;width:13px;height:13px;margin-left:-6.5px;border-radius:50%;background:var(--red);transform:scale(.0);transition:transform .1s}
+.player-wrap.ui .seek .knob,.seek.drag .knob{transform:scale(1)}
+.seek.drag .track,.seek.drag .fill,.seek.drag .buf{height:5px}
+
+.speed-menu{position:absolute;right:12px;bottom:64px;z-index:6;background:rgba(28,28,28,.96);border-radius:12px;padding:6px 0;min-width:150px}
+.speed-menu button{display:flex;justify-content:space-between;width:100%;padding:9px 18px;font-size:14px}
+.speed-menu button:hover{background:rgba(255,255,255,.1)}
+.speed-menu button.on::after{content:"✓";color:var(--done)}
+
+/* Double-tap ripple */
+.ripple{position:absolute;top:0;bottom:0;width:42%;z-index:5;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#fff;font-size:13px;font-weight:500;opacity:0;transition:opacity .25s;overflow:hidden}
+.ripple.l{left:0;border-radius:0 50% 50% 0/0 50% 50% 0}
+.ripple.r{right:0;border-radius:50% 0 0 50%/50% 0 0 50%}
+.ripple.show{opacity:1;background:rgba(255,255,255,.14)}
+.arrows{display:flex;gap:2px}
+.arrows span{width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;opacity:.25}
+.ripple.r .arrows span{border-left:12px solid #fff}
+.ripple.l .arrows span{border-right:12px solid #fff}
+.ripple.show .arrows span{animation:arr .75s infinite}
+.ripple.r .arrows span:nth-child(2),.ripple.l .arrows span:nth-child(2){animation-delay:.15s}
+.ripple.r .arrows span:nth-child(3),.ripple.l .arrows span:nth-child(3){animation-delay:.3s}
+.ripple.l .arrows{flex-direction:row-reverse}
+@keyframes arr{0%,100%{opacity:.25}40%{opacity:1}}
+.toast{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:7;background:rgba(0,0,0,.75);color:#fff;padding:7px 14px;border-radius:16px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1}
+.hint{position:absolute;inset:auto 0 50% 0;transform:translateY(50%);z-index:6;text-align:center;font-size:13px;color:#fff;pointer-events:none}
+
+/* Fullscreen */
+.player-wrap.fs{position:fixed;inset:0;z-index:100;border-radius:0;aspect-ratio:auto;width:100vw;height:100vh;height:100dvh}
+.player-wrap:fullscreen{border-radius:0;aspect-ratio:auto;width:100%;height:100%}
+body.lock{overflow:hidden}
+
+/* Details under player */
+.title{font-size:20px;font-weight:700;line-height:1.35;margin:12px 0 6px;text-wrap:balance}
+.meta{color:var(--muted);font-size:13px;display:flex;flex-wrap:wrap;gap:4px 8px}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.btn{height:36px;padding:0 16px;border-radius:18px;background:var(--surface-2);font-weight:500;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{background:var(--hover)}
+.btn svg{width:20px;height:20px;fill:currentColor}
+.btn.done{background:var(--fg);color:#0f0f0f}
+.btn.toggle[aria-pressed="true"]{background:#263850;color:var(--done)}
+.note{margin-top:14px;background:var(--surface-2);border-radius:12px;padding:12px 14px;font-size:13px;color:var(--muted);line-height:1.5}
+.note b{color:var(--fg);font-weight:500}
+
+/* Progress card */
+.prog{background:var(--surface);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.prog-h{display:flex;justify-content:space-between;align-items:baseline;font-size:14px}
+.prog-h b{font-size:16px}
+.prog-h span{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.pbar{height:4px;background:var(--hover);border-radius:2px;margin-top:10px;overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--red);border-radius:2px;transition:width .3s}
+
+/* Chips */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;height:32px;padding:0 12px;border-radius:8px;background:var(--surface-2);font-size:14px;font-weight:500;white-space:nowrap}
+.chip:hover{background:var(--hover)}
+.chip.on{background:var(--fg);color:#0f0f0f}
+
+/* List */
+.list{display:flex;flex-direction:column}
+.sec-h{position:sticky;top:56px;z-index:5;background:var(--bg);display:flex;justify-content:space-between;align-items:center;padding:14px 4px 8px;font-weight:700;font-size:15px}
+.sec-h span{font-weight:400;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.item{display:flex;gap:10px;padding:6px 4px;border-radius:10px;cursor:pointer;align-items:flex-start}
+.item:hover{background:var(--surface)}
+.item.now{background:var(--surface-2)}
+.num{width:26px;flex:none;color:var(--muted);font-size:12px;text-align:center;padding-top:30px;font-variant-numeric:tabular-nums}
+.item.now .num{color:var(--red)}
+.thumb{position:relative;width:160px;flex:none;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:var(--surface-2)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.dur{position:absolute;right:4px;bottom:4px;background:rgba(0,0,0,.8);color:#fff;font-size:11px;font-weight:500;padding:1px 4px;border-radius:4px;font-variant-numeric:tabular-nums}
+.wbar{position:absolute;left:0;bottom:0;height:3px;background:var(--red)}
+.thumb .ok{position:absolute;inset:0;background:rgba(0,0,0,.55);display:grid;place-items:center}
+.thumb .ok svg{width:30px;height:30px;fill:#fff}
+.info{min-width:0;flex:1;padding-top:2px}
+.info h3{margin:0;font-size:14px;font-weight:500;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.info p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.chk{flex:none;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;margin-top:6px}
+.chk:hover{background:var(--hover)}
+.chk i{width:20px;height:20px;border:2px solid var(--muted);border-radius:50%;display:grid;place-items:center}
+.chk.on i{background:var(--done);border-color:var(--done)}
+.chk.on i::after{content:"";width:5px;height:10px;border:solid #0f0f0f;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.empty{color:var(--muted);text-align:center;padding:40px 10px;font-size:14px}
+
+@media (max-width:1000px){
+  .page{grid-template-columns:1fr;padding:0 0 40px;gap:0}
+  .player-sticky{position:sticky;top:56px;z-index:20;background:var(--bg)}
+  .player-wrap{border-radius:0}
+  .details{padding:0 16px}
+  .side{padding:12px 16px 0}
+  .sec-h{top:calc(56px + 56.25vw)}
+  .stat{display:none}
+}
+@media (max-width:600px){
+  .top{gap:10px;padding-inline:12px}
+  .logo span{display:none}
+  .thumb{width:140px}
+  .num{display:none}
+  .title{font-size:17px}
+  .note{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo" aria-label="DSA"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="15" fill="#6d4aff"/><g stroke="#fff" stroke-width="3.2" stroke-linecap="round"><line x1="32" y1="19" x2="19" y2="44"/><line x1="32" y1="19" x2="45" y2="44"/></g><circle cx="32" cy="18" r="7" fill="#fff"/><circle cx="19" cy="45" r="6" fill="#ffd166"/><circle cx="45" cy="45" r="6" fill="#fff"/></svg>
+<span>DSA</span></div>
+  <label class="search">
+    <input id="q" type="search" placeholder="Search lectures" autocomplete="off" aria-label="Search lectures">
+    <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+  </label>
+  <div class="stat"><b id="statTop">0 / 0</b>lectures done</div>
+</header>
+
+<div class="page">
+  <main class="main">
+    <div class="player-sticky">
+      <div class="player-wrap ui is-paused" id="pw">
+        <div id="yt"></div>
+        <div class="paused-cover"></div>
+        <div class="tap" id="tap"></div>
+        <div class="scrim"></div>
+        <div class="ripple l" id="rl"><div class="arrows"><span></span><span></span><span></span></div><div class="rtxt">10 seconds</div></div>
+        <div class="ripple r" id="rr"><div class="arrows"><span></span><span></span><span></span></div><div class="rtxt">10 seconds</div></div>
+        <div class="toast" id="toast"></div>
+        <div class="hint" id="hint" hidden>Loading player…</div>
+        <div class="ctrl center">
+          <button class="sm" id="cPrev" aria-label="Previous lecture"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+          <button class="big" id="cPlay" aria-label="Play"><svg viewBox="0 0 24 24"><path id="playPath" d="M8 5v14l11-7z"/></svg></button>
+          <button class="sm" id="cNext" aria-label="Next lecture"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+        </div>
+        <div class="ctrl bar">
+          <div class="seek" id="seek"><div class="track"></div><div class="buf" id="sBuf"></div><div class="fill" id="sFill"></div><div class="knob" id="sKnob"></div></div>
+          <div class="row">
+            <span class="time"><span id="tCur">0:00</span> / <span id="tDur">0:00</span></span>
+            <span class="grow"></span>
+            <button class="pill" id="cSpeed" aria-label="Playback speed">1x</button>
+            <button class="icon" id="cFs" aria-label="Full screen"><svg viewBox="0 0 24 24"><path id="fsPath" d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg></button>
+          </div>
+        </div>
+        <div class="speed-menu" id="speedMenu" hidden></div>
+      </div>
+    </div>
+    <div class="details">
+      <h1 class="title" id="vTitle">DSA</h1>
+      <div class="meta" id="vMeta"></div>
+      <div class="actions">
+        <button class="btn" id="bDone"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Mark as done</span></button>
+        <button class="btn" id="bPrev">Previous</button>
+        <button class="btn" id="bNext">Next lecture</button>
+        <button class="btn toggle" id="bAuto" aria-pressed="true">Autoplay next</button>
+      </div>
+      <div class="note"><b>Gestures:</b> double-tap right side to skip 10s forward, left side to go back 10s (keep tapping to skip more). Tap once to show controls. <b>Keyboard:</b> Space play/pause, ← → 10s, J/L 10s, F full screen, N next, P previous.</div>
+    </div>
+  </main>
+
+  <aside class="side">
+    <div class="prog">
+      <div class="prog-h"><b>Strivers A2Z DSA</b><span id="progTxt"></span></div>
+      <div class="pbar"><i id="progBar" style="width:0"></i></div>
+      <button class="btn" id="bContinue" style="margin-top:12px;width:100%;justify-content:center">Continue watching</button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="list" id="list"></div>
+  </aside>
+</div>
+
+<script>
+const LECTURES = [{"id": "0bHoB32fuj0", "t": "Don't watch my A2Z DSA Course", "d": "8:24"}, {"id": "h3uDCJ5mvgw", "t": "How to setup VS code for DSA and CP | Input / Output split format", "d": "8:51"}, {"id": "EAR7De6Goz4", "t": "C++ Basics in One Shot - L1", "d": "1:26:27"}, {"id": "FPu9Uld7W-E", "t": "Time and Space Complexity", "d": "35:16"}, {"id": "tNm_NNSB3_w", "t": "Solve any Pattern Question - Trick Explained | 22 Patterns in 1 Shot", "d": "1:22:06"}, {"id": "RRVYpIET_RU", "t": "Complete C++ STL in 1 Video | Time Complexity and Notes", "d": "1:07:37"}, {"id": "1xNbjMdbjug", "t": "Basic Maths for DSA | Euclidean Algorithm", "d": "1:03:20"}, {"id": "yVdKa8dnKiE", "t": "Re 1. Introduction to Recursion | Recursion Tree | Stack Space", "d": "22:46"}, {"id": "un6PLygfXrA", "t": "Re 2. Problems on Recursion", "d": "22:04"}, {"id": "69ZCDFy-OUo", "t": "Re 3. Parameterised and Functional Recursion", "d": "18:14"}, {"id": "twuC1F6gLI8", "t": "Re 4. Problems on Functional Recursion", "d": "19:48"}, {"id": "kvRjNm4rVBE", "t": "Re 5. Multiple Recursion Calls | Problems", "d": "16:45"}, {"id": "KEs5UyBJ39g", "t": "Hashing | Maps | Time Complexity | Collisions | Division Rule of Hashing", "d": "1:00:06"}, {"id": "HGk_ypEuS24", "t": "Sorting - Part 1 | Selection Sort, Bubble Sort, Insertion Sort", "d": "43:44"}, {"id": "ogjf7ORKfd8", "t": "Merge Sort | Algorithm | Pseudocode | Dry Run | Code", "d": "49:43"}, {"id": "WIrA4YexLRQ", "t": "Quick Sort For Beginners", "d": "35:17"}, {"id": "37E9ckMDdTk", "t": "Find Second Largest Element in Array | Remove duplicates from Sorted Array | Arrays Intro Video", "d": "43:26"}, {"id": "wvcQg43_V8U", "t": "Rotate Array by K places | Union, Intersection of Sorted Arrays | Move Zeros to End | Arrays Part-2", "d": "1:13:17"}, {"id": "bYWLJb3vCWY", "t": "Find element that appears once | Find missing number | Max Consecutive number of 1's | Arrays Part-3", "d": "38:00"}, {"id": "frf7qxiN2qU", "t": "Longest Subarray with sum K | Brute - Better - Optimal | Generate Subarrays", "d": "41:42"}, {"id": "UXDSeD9mN-k", "t": "2 Sum Problem | 2 types of the same problem for Interviews | Brute-Better-Optimal", "d": "18:20"}, {"id": "tp8JIuCXBaU", "t": "Sort an array of 0's 1's & 2's | Intuition of Algo | Brute-Better-Optimal", "d": "25:07"}, {"id": "nP_ns3uSh80", "t": "Majority Element I | Brute-Better-Optimal | Moore's Voting Algorithm", "d": "18:13"}, {"id": "AHZpyENo7k4", "t": "Kadane's Algorithm | Maximum Subarray Sum | Finding and Printing", "d": "20:09"}, {"id": "excAOvwF_Wk", "t": "DP 35. Best Time to Buy and Sell Stock | DP on Stocks", "d": "9:11"}, {"id": "h4aBagy4Uok", "t": "Rearrange Array Elements by Sign | 2 Varieties of same Problem", "d": "21:37"}, {"id": "JDOXKqF60RQ", "t": "Next Permutation - Intuition in Detail | Brute to Optimal", "d": "28:15"}, {"id": "cHrH9CQ8pmY", "t": "Leaders in an Array | Brute - Optimal", "d": "11:53"}, {"id": "oO5uLE7EUlM", "t": "Longest Consecutive Sequence | Google Interview Question | Brute Better Optimal", "d": "23:11"}, {"id": "N0MgLvceX7M", "t": "Set Matrix Zeroes | O(1) Space Approach | Brute - Better - Optimal", "d": "30:07"}, {"id": "Z0R2u6gd3GU", "t": "Rotate Matrix/Image by 90 Degrees | Brute - Optimal", "d": "17:47"}, {"id": "3Zv-s9UUrFM", "t": "Spiral Traversal of a Matrix | Spiral Matrix", "d": "16:33"}, {"id": "xvNwoz-ufXA", "t": "Count Subarray sum Equals K | Brute - Better -Optimal", "d": "24:09"}, {"id": "bR7mQgwQ_o8", "t": "Pascal Triangle | Finding nCr in minimal time", "d": "26:45"}, {"id": "vwZj1K0e9U8", "t": "Majority Element II | Brute-Better-Optimal", "d": "26:58"}, {"id": "DhFh8Kw7ymk", "t": "3 Sum | Brute - Better - Optimal with Codes", "d": "38:25"}, {"id": "eD95WRfh81c", "t": "4 Sum | Brute - Better - Optimal with Codes", "d": "28:47"}, {"id": "eZr-6p0B7ME", "t": "Number of Subarrays with xor K | Brute - Better - Optimal", "d": "24:55"}, {"id": "IexN60k62jo", "t": "Merge Overlapping Intervals | Brute, Optimal with Precise TC analysis", "d": "22:35"}, {"id": "n7uwj04E0I4", "t": "Merge Sorted Arrays Without Extra Space | 2 Optimal Solution", "d": "32:47"}, {"id": "2D0D8HE6uak", "t": "Find the Missing and Repeating Number | 4 Approaches", "d": "42:24"}, {"id": "AseUmwVNaoY", "t": "Count Inversions in an Array | Brute and Optimal", "d": "24:17"}, {"id": "0e4bZaP3MDI", "t": "Reverse Pairs | Hard Interview Question", "d": "32:26"}, {"id": "hnswaLJvr6g", "t": "Maximum Product Subarray - Best Intuitive Approach Discussed", "d": "20:27"}, {"id": "MHf6awe89xw", "t": "BS-1. Binary Search Introduction | Real Life Example | Iterative | Recursive | Overflow Cases", "d": "33:27"}, {"id": "6zhGS79oQ4k", "t": "BS-2. Implement Lower Bound and Upper Bound | Search Insert Position | Floor and Ceil", "d": "32:26"}, {"id": "hjR1IYVx9lY", "t": "BS-3. First and Last Occurrences in Array | Count occurrences in Array", "d": "25:28"}, {"id": "5qGrJbHhqFs", "t": "BS-4. Search Element in Rotated Sorted Array - I", "d": "16:38"}, {"id": "w2G2W8l__pc", "t": "BS-5. Search Element in Rotated Sorted Array II", "d": "12:44"}, {"id": "nhEMDKMB44g", "t": "BS-6. Minimum in Rotated Sorted Array", "d": "17:08"}, {"id": "jtSiWTPLwd0", "t": "BS-7. Find out how many times array has been rotated", "d": "5:01"}, {"id": "AZOmHuHadxQ", "t": "BS-8. Single Element in Sorted Array", "d": "22:16"}, {"id": "cXxmbemS6XM", "t": "BS-9. Find Peak Element", "d": "32:53"}, {"id": "Bsv3FPUX_BA", "t": "BS-10. Finding Sqrt of a number using Binary Search", "d": "17:11"}, {"id": "rjEJeYCasHs", "t": "BS-11. Find the Nth root of an Integer", "d": "20:44"}, {"id": "qyfekrNni90", "t": "BS-12. Koko Eating Bananas", "d": "21:04"}, {"id": "TXAuxeYBTdg", "t": "BS-13. Minimum days to make M bouquets | Binary Search", "d": "26:01"}, {"id": "UvBKTVaG6U8", "t": "BS-14. Find the Smallest Divisor Given a Threshold | Binary Search", "d": "16:00"}, {"id": "MG-Ac4TAvTY", "t": "BS-15. Capacity to Ship Packages within D Days", "d": "20:36"}, {"id": "uZ0N_hZpyps", "t": "BS-16. Kth Missing Positive Number | Maths + Binary Search", "d": "22:52"}, {"id": "R_Mfw4ew-Vo", "t": "BS-17. Aggressive Cows | Binary Search Hard", "d": "26:44"}, {"id": "Z0hwjftStI4", "t": "BS-18. Allocate Books or Book Allocation | Hard Binary Search", "d": "27:29"}, {"id": "thUd_WJn6wk", "t": "BS 19. Painter's Partition and Split Array - Largest Sum", "d": "11:20"}, {"id": "kMSBvlZ-_HA", "t": "BS-20. Minimise Maximum Distance between Gas Stations | 3 Approaches | Heap | Binary Search", "d": "59:12"}, {"id": "C2rRzz-JDk8", "t": "BS 21: Median of two Sorted Arrays of Different Sizes | Brute and Better Approach", "d": "15:59"}, {"id": "F9c7LpRZWVQ", "t": "BS-21. Median of two Sorted Arrays of Different Sizes | Binary Search Approach With Intuition", "d": "35:00"}, {"id": "D1oDwWCq50g", "t": "Bs-22. K-th element of two sorted arrays | Binary Search Approach", "d": "11:53"}, {"id": "SCz-1TtYxDI", "t": "BS 23. Row with maximum number of 1s | Binary Search on 2D Arrays", "d": "10:18"}, {"id": "JXU4Akft7yk", "t": "BS-24. Search in a 2D Matrix - I | Binary Search of 2D", "d": "15:42"}, {"id": "9ZbB397jU4k", "t": "BS-25. Search in a 2D Matrix - II | Binary Search on 2D", "d": "15:29"}, {"id": "nGGp5XBzC4g", "t": "BS-26. Find Peak Element-II | Binary Search", "d": "20:02"}, {"id": "Q9wXgdxJq48", "t": "BS-27. Median in a Row Wise Sorted Matrix", "d": "23:13"}, {"id": "_ANrF3FJm7I", "t": "L1. Introduction to Trees | Types of Trees", "d": "9:50"}, {"id": "ctCpP0RFDFc", "t": "L2. Binary Tree Representation in C++", "d": "4:43"}, {"id": "hyLyW7rP24I", "t": "L3. Binary Tree Representation in Java", "d": "4:12"}, {"id": "jmy0LaGET1I", "t": "L4. Binary Tree Traversals in Binary Tree | BFS | DFS", "d": "9:59"}, {"id": "RlUu72JrOCQ", "t": "L5. Preorder Traversal of Binary Tree | C++ | Java | Code Explanation", "d": "7:29"}, {"id": "Z_NEgBgbRVI", "t": "L6. Inorder Traversal of Binary Tree | C++ | Java | Code Explanation", "d": "7:07"}, {"id": "COQOU6klsBg", "t": "L7. Postorder Traversal of Binary Tree | C++ | Java | Code Explanation", "d": "5:31"}, {"id": "EoAsWbO7sqg", "t": "L8. Level Order Traversal of Binary Tree | BFS | C++ | Java", "d": "8:57"}, {"id": "Bfqd8BsPVuw", "t": "L9. Iterative Preorder Traversal in Binary Tree | C++ | Java | Stack", "d": "6:50"}, {"id": "lxTGsVXjwvM", "t": "L10. iterative Inorder Traversal in Binary Tree | C++ | Java | Stack", "d": "11:14"}, {"id": "2YBhNLodD8Q", "t": "L11. Iterative Postorder Traversal using 2 Stack | C++ | Java | Binary Tree", "d": "4:09"}, {"id": "NzIGLLwZBS8", "t": "L12. Iterative Postorder Traversal using 1 Stack | C++ | Java | Binary Trees", "d": "12:33"}, {"id": "ySp2epYvgTE", "t": "L13. Preorder Inorder Postorder Traversals in One Traversal | C++ | Java | Stack | Binary Trees", "d": "10:57"}, {"id": "eD3tmO66aBA", "t": "L14. Maximum Depth in Binary Tree | Height of Binary Tree | C++ | Java", "d": "8:05"}, {"id": "Yt50Jfbd8Po", "t": "L15. Check for Balanced Binary Tree | C++ | Java", "d": "12:30"}, {"id": "Rezetez59Nk", "t": "L16. Diameter of Binary Tree | C++ | Java", "d": "13:47"}, {"id": "WszrfSwMz58", "t": "L17. Maximum Path Sum in Binary Tree | C++ | Java", "d": "17:50"}, {"id": "BhuvF_-PWS0", "t": "L18. Check it two trees are Identical or Not | C++ | Java", "d": "4:18"}, {"id": "3OXWEdlIGl4", "t": "L19. Zig-Zag or Spiral Traversal in Binary Tree | C++ | Java", "d": "8:21"}, {"id": "0ca1nvR0be4", "t": "L20. Boundary Traversal in Binary Tree | C++ | Java", "d": "9:47"}, {"id": "q_a6lpbKJdw", "t": "L21. Vertical Order Traversal of Binary Tree | C++ | Java", "d": "18:53"}, {"id": "Et9OCDNvJ78", "t": "L22. Top View of Binary Tree | C++ | Java", "d": "10:30"}, {"id": "0FtVY6I4pB8", "t": "L23. Bottom View of Binary Tree | C++ | Java", "d": "13:13"}, {"id": "KV4mRzTjlAk", "t": "L24. Right/Left View of Binary Tree | C++ | Java", "d": "13:28"}, {"id": "nKggNAiEpBE", "t": "L25. Check for Symmetrical Binary Trees | C++ | Java", "d": "9:20"}, {"id": "fmflMqVOC7k", "t": "L26. Print Root to Node Path in Binary Tree | C++ | Java", "d": "11:00"}, {"id": "_-QHfMDde90", "t": "L27. Lowest Common Ancestor in Binary Tree | LCA | C++ | Java", "d": "14:09"}, {"id": "ZbybYvcVLks", "t": "L28. Maximum Width of Binary Tree | C++ | Java", "d": "22:41"}, {"id": "fnmisPM6cVo", "t": "L29. Children Sum Property in Binary Tree | O(N) Approach | C++ | Java", "d": "16:13"}, {"id": "i9ORlEy6EsI", "t": "L30. Print all the Nodes at a distance of K in Binary Tree | C++ | Java", "d": "17:42"}, {"id": "2r5wLmQfD6g", "t": "L31. Minimum time taken to BURN the Binary Tree from a Node | C++ | Java", "d": "18:24"}, {"id": "u-yWemKGWO0", "t": "L32. Count total Nodes in a COMPLETE Binary Tree | O(Log^2 N) Approach | C++ | Java", "d": "16:13"}, {"id": "9GMECGQgWrQ", "t": "L33. Requirements needed to construct a Unique Binary Tree | Theory", "d": "8:41"}, {"id": "aZNaLrVebKQ", "t": "L34. Construct a Binary Tree from Preorder and Inorder Traversal | C++ | Java", "d": "18:52"}, {"id": "LgLRTaEMRVc", "t": "L35. Construct the Binary Tree from Postorder and Inorder Traversal | C++ | Java", "d": "19:46"}, {"id": "-YbXySKJsX8", "t": "L36. Serialize and De-serialize Binary Tree | C++ | Java", "d": "17:18"}, {"id": "80Zug6D1_r4", "t": "L37. Morris Traversal | Preorder | Inorder | C++ | Java", "d": "23:50"}, {"id": "sWf7k1x9XR4", "t": "L38. Flatten a Binary Tree to Linked List | 3 Approaches | C++ | Java", "d": "21:51"}, {"id": "p7-9UvDQZ3w", "t": "L39. Introduction to Binary Search Tree | BST", "d": "8:54"}, {"id": "KcNt6v_56cc", "t": "L40. Search in a Binary Search Tree | BST | C++ | Java", "d": "6:33"}, {"id": "KSsk8AhdOZA", "t": "L41. Ceil in a Binary Search Tree | BST | C++ | Java", "d": "5:36"}, {"id": "xm_W1ub-K-w", "t": "L42. Floor in a Binary Search Tree | BST | C++ | Java", "d": "5:00"}, {"id": "FiFiNvM29ps", "t": "L43. Insert a given Node in Binary Search Tree | BST | C++ | Java", "d": "8:18"}, {"id": "kouxiP_H5WE", "t": "L44. Delete a Node in Binary Search Tree | BST | C++ | Java", "d": "15:48"}, {"id": "9TJYWh0adfk", "t": "L45. K-th Smallest/Largest Element in BST", "d": "8:27"}, {"id": "f-sj7I5oXEI", "t": "L46. Check if a tree is a BST or BT | Validate a BST", "d": "9:39"}, {"id": "cX_kPV_foZc", "t": "L47. LCA in Binary Search Tree", "d": "8:06"}, {"id": "UmJT3j26t1I", "t": "L48. Construct a BST from a preorder traversal | 3 Methods", "d": "16:32"}, {"id": "SXKAD2svfmI", "t": "L49. Inorder Successor/Predecessor in BST | 3 Methods", "d": "10:47"}, {"id": "D2jMcmxU4bs", "t": "L50. Binary Search Tree Iterator | BST | O(H) Space", "d": "14:00"}, {"id": "ssL3sHwPeb4", "t": "L51. Two Sum In BST | Check if there exists a pair with Sum K", "d": "15:06"}, {"id": "ZWGW7FminDM", "t": "L52. Recover BST | Correct BST with two nodes swapped", "d": "15:56"}, {"id": "X0oXMdtUDwo", "t": "L53. Largest BST in Binary Tree", "d": "17:27"}, {"id": "M3_pLsDdeuU", "t": "G-1. Introduction to Graph | Types | Different Conventions Used", "d": "13:43"}, {"id": "3oI-34aPMWM", "t": "G-2. Graph Representation in C++ | Two Ways to Represent", "d": "16:04"}, {"id": "OsNklbh9gYI", "t": "G-3. Graph Representation in Java | Two Ways to Represent", "d": "13:13"}, {"id": "lea-Wl_uWXY", "t": "G-4. What are Connected Components ?", "d": "7:07"}, {"id": "-tgVpUgsQ5k", "t": "G-5. Breadth-First Search (BFS) | C++ and Java | Traversal Technique in Graphs", "d": "19:39"}, {"id": "Qzf1a--rhp8", "t": "G-6. Depth-First Search (DFS) | C++ and Java | Traversal Technique in Graphs", "d": "20:16"}, {"id": "ACzkVtewUYA", "t": "G-7. Number of Provinces | C++ | Java | Connected Components", "d": "15:29"}, {"id": "muncqlKJrH0", "t": "G-8. Number of Islands | Number of Connected Components in Matrix | C++ | Java", "d": "25:04"}, {"id": "C-2_uSRli8o", "t": "G-9. Flood Fill Algorithm | C++ | Java", "d": "20:34"}, {"id": "yf3oUhkvqA0", "t": "G-10. Rotten Oranges | C++ | Java", "d": "22:30"}, {"id": "BPlrALf1LDU", "t": "G-11. Detect a Cycle in an Undirected Graph using BFS | C++ | Java", "d": "20:19"}, {"id": "zQ3zgFypzX4", "t": "G-12. Detect a Cycle in an Undirected Graph using DFS | C++ | Java", "d": "19:10"}, {"id": "edXdVwkYHF8", "t": "G-13. Distance of nearest cell having 1 | 0/1 Matrix | C++ | Java", "d": "20:21"}, {"id": "BtdgAys4yMk", "t": "G-14. Surrounded Regions | Replace O's with X's | C++ | Java", "d": "23:17"}, {"id": "rxKcepXQgU4", "t": "G-15. Number of Enclaves | Multi-source BFS | C++ | Java", "d": "15:34"}, {"id": "7zmgQSJghpo", "t": "G-16. Number of Distinct Islands | Constructive Thinking + DFS | C++ | Java", "d": "18:02"}, {"id": "-vu34sct1g8", "t": "G-17. Bipartite Graph | BFS | C++ | Java", "d": "18:29"}, {"id": "KG5YFfR0j8A", "t": "G-18. Bipartite Graph | DFS | C++ | Java", "d": "14:54"}, {"id": "9twcmtQj4DU", "t": "G-19. Detect cycle in a directed graph using DFS | Java | C++", "d": "17:22"}, {"id": "uRbJ1OF9aYM", "t": "G-20. Find Eventual Safe States - DFS", "d": "23:43"}, {"id": "5lZ0iJMrUMk", "t": "G-21. Topological Sort Algorithm | DFS", "d": "13:30"}, {"id": "73sneFXuTEg", "t": "G-22. Kahn's Algorithm | Topological Sort Algorithm | BFS", "d": "13:50"}, {"id": "iTBaI90lpDQ", "t": "G-23. Detect a Cycle in Directed Graph | Topological Sort | Kahn's Algorithm | BFS", "d": "6:17"}, {"id": "WAOfKpxYHR8", "t": "G-24. Course Schedule I and II | Pre-requisite Tasks | Topological Sort", "d": "11:32"}, {"id": "2gtg3VsDGyc", "t": "G-25. Find Eventual Safe States - BFS - Topological Sort", "d": "16:57"}, {"id": "U3N_je7tWAs", "t": "G-26. Alien Dictionary - Topological Sort", "d": "20:54"}, {"id": "ZUFQfFaU-8U", "t": "G-27. Shortest Path in Directed Acyclic Graph - Topological Sort", "d": "26:36"}, {"id": "C4gxoTaI71U", "t": "G-28. Shortest Path in Undirected Graph with Unit Weights", "d": "16:32"}, {"id": "tRPda0rcf8E", "t": "G-29. Word Ladder - I | Shortest Paths", "d": "28:07"}, {"id": "DREutrv2XD0", "t": "G-30. Word Ladder - 2 | Shortest Paths", "d": "25:42"}, {"id": "AD4SFl7tu7I", "t": "G-31. Word Ladder - 2 | Optimised Approach for Leetcode", "d": "23:40"}, {"id": "V6H1qAeB-l4", "t": "G-32. Dijkstra's Algorithm - Using Priority Queue - C++ and Java - Part 1", "d": "22:42"}, {"id": "PATgNiuTP20", "t": "G-33. Dijkstra's Algorithm - Using Set - Part 2", "d": "12:29"}, {"id": "3dINsjyfooY", "t": "G-34. Dijkstra's Algorithm - Why PQ and not Q, Intuition, Time Complexity Derivation - Part 3", "d": "14:30"}, {"id": "rp1SMw7HSO8", "t": "G-35. Print Shortest Path - Dijkstra's Algorithm", "d": "19:20"}, {"id": "U5Mw4eyUmw4", "t": "G-36. Shortest Distance in a Binary Maze", "d": "23:42"}, {"id": "0ytpZyiZFhA", "t": "G-37. Path With Minimum Effort", "d": "24:30"}, {"id": "9XybHVqTHcQ", "t": "G-38. Cheapest Flights Within K Stops", "d": "23:56"}, {"id": "_BvEJ3VIDWw", "t": "G-39. Minimum Multiplications to Reach End", "d": "19:31"}, {"id": "_-0mx0SmYxA", "t": "G-40. Number of Ways to Arrive at Destination", "d": "24:06"}, {"id": "0vVofAhAYjc", "t": "G-41. Bellman Ford Algorithm", "d": "27:43"}, {"id": "YbY8cVwWAvw", "t": "G-42. Floyd Warshall Algorithm", "d": "30:13"}, {"id": "PwMVNSJ5SLI", "t": "G-43. Find the City With the Smallest Number of Neighbours at a Threshold Distance", "d": "12:56"}, {"id": "ZSPjZuZWCME", "t": "G-44. Minimum Spanning Tree - Theory", "d": "7:59"}, {"id": "mJcZjjKzeqk", "t": "G-45. Prim's Algorithm - Minimum Spanning Tree - C++ and Java", "d": "19:10"}, {"id": "aBxjDBC4M1U", "t": "G-46. Disjoint Set | Union by Rank | Union by Size | Path Compression", "d": "42:15"}, {"id": "DMnDM_sxVig", "t": "G-47. Kruskal's Algorithm - Minimum Spanning Tree - C++ and Java", "d": "13:11"}, {"id": "ZGr5nX-Gi6Y", "t": "G-48. Number of Provinces - Disjoint Set", "d": "8:03"}, {"id": "FYrl7iz9_ZU", "t": "G-49. Number of Operations to Make Network Connected - DSU", "d": "14:48"}, {"id": "FMwpt_aQOGw", "t": "G-50. Accounts Merge - DSU", "d": "22:01"}, {"id": "Rn6B-Q4SNyA", "t": "G-51. Number of Islands - II - Online Queries - DSU", "d": "25:32"}, {"id": "lgiz0Oup6gM", "t": "G-52. Making a Large Island - DSU", "d": "26:16"}, {"id": "OwMNX8SPavM", "t": "G-53. Most Stones Removed with Same Row or Column - DSU", "d": "23:51"}, {"id": "R6uoSjZ2imo", "t": "G-54. Strongly Connected Components - Kosaraju's Algorithm", "d": "22:44"}, {"id": "qrAub5z8FeA", "t": "G-55. Bridges in Graph - Using Tarjan's Algorithm of time in and low time", "d": "23:25"}, {"id": "j1QDfU21iZk", "t": "G-56. Articulation Point in Graph", "d": "22:00"}, {"id": "tyB0ztf0DNY", "t": "DP 1. Introduction to Dynamic Programming | Memoization | Tabulation | Space Optimization Techniques", "d": "33:51"}, {"id": "mLfjzJsN8us", "t": "DP 2. Climbing Stairs | Learn How to Write 1D Recurrence Relations", "d": "13:17"}, {"id": "EgG3jsGoPvQ", "t": "DP 3. Frog Jump | Dynamic Programming | Learn to write 1D DP", "d": "38:50"}, {"id": "Kmh3rhyEtB8", "t": "DP 4. Frog Jump with K Distance | Lecture 3 Follow Up Question", "d": "17:35"}, {"id": "GrMBfJNk_NY", "t": "DP 5. Maximum Sum of Non-Adjacent Elements | House Robber | 1-D | DP on Subsequences", "d": "32:23"}, {"id": "3WaxQMELSkw", "t": "DP 6. House Robber 2 | 1D DP | DP on Subsequences", "d": "9:50"}, {"id": "AE39gJYuRog", "t": "DP 7. Ninja's Training | MUST WATCH for 2D CONCEPTS | Vacation | Atcoder | 2D DP", "d": "52:18"}, {"id": "sdE0A2Oxofw", "t": "DP 8. Grid Unique Paths | Learn Everything about DP on Grids | ALL TECHNIQUES", "d": "48:29"}, {"id": "TmhpgXScLyY", "t": "DP 9. Unique Paths 2 | DP on Grid with Maze Obstacles", "d": "12:59"}, {"id": "_rgTlyky1uQ", "t": "DP 10. Minimum Path Sum in Grid | Asked to me In Microsoft Internship Interview | DP on GRIDS", "d": "23:47"}, {"id": "SrP-PiLSYC0", "t": "DP 11. Triangle | Fixed Starting Point and Variable Ending Point | DP on GRIDS", "d": "34:39"}, {"id": "N_aJ5qQbYA0", "t": "DP 12. Minimum/Maximum Falling Path Sum | Variable Starting and Ending Points | DP on Grids", "d": "42:38"}, {"id": "QGfn7JeXK54", "t": "DP 13. Cherry Pickup II | 3D DP Made Easy | DP On Grids", "d": "43:23"}, {"id": "fWX9xDmIzRI", "t": "DP 14. Subset Sum Equals to Target | Identify DP on Subsequences and Ways to Solve them", "d": "38:49"}, {"id": "7win3dcgo3k", "t": "DP 15. Partition Equal Subset Sum | DP on Subsequences", "d": "9:43"}, {"id": "GS_OqZb2CWc", "t": "DP 16. Partition A Set Into Two Subsets With Minimum Absolute Sum Difference | DP on Subsequences", "d": "29:50"}, {"id": "ZHyb-A2Mte4", "t": "DP 17. Counts Subsets with Sum K | Dp on Subsequences", "d": "36:57"}, {"id": "zoilQD1kYSg", "t": "DP 18. Count Partitions With Given Difference | Dp on Subsequences", "d": "18:00"}, {"id": "GqOmJHQZivw", "t": "DP 19. 0/1 Knapsack | Recursion to Single Array Space Optimised Approach | DP on Subsequences", "d": "41:19"}, {"id": "myPeWb3Y68A", "t": "DP 20. Minimum Coins | DP on Subsequences | Infinite Supplies Pattern", "d": "34:15"}, {"id": "b3GD8263-PQ", "t": "DP 21. Target Sum | DP on Subsequences", "d": "9:04"}, {"id": "HgyouUi11zk", "t": "DP 22. Coin Change 2 | Infinite Supply Problems | DP on Subsequences", "d": "22:17"}, {"id": "OgvOZ6OrJoY", "t": "DP 23. Unbounded Knapsack | 1-D Array Space Optimised Approach", "d": "22:54"}, {"id": "mO8XpGoJwuo", "t": "DP 24. Rod Cutting Problem | 1D Array Space Optimised Approach", "d": "22:54"}, {"id": "NPZn9jBrX8U", "t": "DP 25. Longest Common Subsequence | Top Down | Bottom-Up | Space Optimised | DP on Strings", "d": "47:09"}, {"id": "-zI4mrF2Pb4", "t": "DP 26. Print Longest Common Subsequence | Dp on Strings", "d": "16:55"}, {"id": "_wP9mWNPL5w", "t": "DP 27. Longest Common Substring | DP on Strings", "d": "14:01"}, {"id": "6i_T5kkfv4A", "t": "DP 28. Longest Palindromic Subsequence", "d": "9:38"}, {"id": "xPBLEj41rFU", "t": "DP 29. Minimum Insertions to Make String Palindrome", "d": "12:00"}, {"id": "yMnH0jrir0Q", "t": "DP 30. Minimum Insertions/Deletions to Convert String A to String B", "d": "7:30"}, {"id": "xElxAuBcvsU", "t": "DP 31. Shortest Common Supersequence | DP on Strings", "d": "26:44"}, {"id": "nVG7eTiD2bY", "t": "DP 32. Distinct Subsequences | 1D Array Optimisation Technique", "d": "40:15"}, {"id": "fJaKO8FbDdo", "t": "DP 33. Edit Distance | Recursive to 1D Array Optimised Solution", "d": "37:39"}, {"id": "ZmlQ3vgAOMo", "t": "DP 34. Wildcard Matching | Recursive to 1D Array Optimisation", "d": "43:52"}, {"id": "nGJmxkUJQGs", "t": "DP 36. Buy and Sell Stock - II | Recursion to Space Optimisation", "d": "35:34"}, {"id": "-uQGzhYj8BQ", "t": "DP 37. Buy and Sell Stocks III | Recursion to Space Optimisation", "d": "31:50"}, {"id": "IV1dHbk5CDc", "t": "DP 38. Buy and Stock Sell IV | Recursion to Space Optimisation", "d": "12:24"}, {"id": "IGIe46xw3YY", "t": "DP 39. Buy and Sell Stocks With Cooldown | Recursion to Space Optimisation", "d": "15:21"}, {"id": "k4eK-vEmnKg", "t": "DP 40. Buy and Sell Stocks With Transaction Fee | Recursion to Space Optimisation", "d": "7:20"}, {"id": "ekcwMsSIzVc", "t": "DP 41. Longest Increasing Subsequence | Memoization", "d": "24:35"}, {"id": "IFfYfonAFGc", "t": "DP 42. Printing Longest Increasing Subsequence | Tabulation | Algorithm", "d": "25:57"}, {"id": "on2hvxBXJH4", "t": "DP 43. Longest Increasing Subsequence | Binary Search | Intuition", "d": "16:27"}, {"id": "gDuZwBW9VvM", "t": "DP 44. Largest Divisible Subset | Longest Increasing Subsequence", "d": "14:39"}, {"id": "YY8iBaYcc4g", "t": "DP 45. Longest String Chain | Longest Increasing Subsequence | LIS", "d": "16:57"}, {"id": "y4vN0WNdrlg", "t": "DP 46. Longest Bitonic Subsequence | LIS", "d": "13:52"}, {"id": "cKVl1TFdNXg", "t": "DP 47. Number of Longest Increasing Subsequences", "d": "20:46"}, {"id": "vRVfmbCFW7Y", "t": "DP 48. Matrix Chain Multiplication | MCM | Partition DP Starts", "d": "53:41"}, {"id": "pDCXsbAw5Cg", "t": "DP 49. Matrix Chain Multiplication | Bottom-Up | Tabulation", "d": "9:08"}, {"id": "xwomavsC86c", "t": "DP 50. Minimum Cost to Cut the Stick", "d": "30:02"}, {"id": "Yz4LlDSlkns", "t": "DP 51. Burst Balloons | Partition DP", "d": "34:00"}, {"id": "MM7fXopgyjw", "t": "DP 52. Evaluate Boolean Expression to True | Partition DP", "d": "34:55"}, {"id": "_H8V5hJUGd0", "t": "DP 53. Palindrome Partitioning - II | Front Partition", "d": "23:17"}, {"id": "PhWWJmaKfMc", "t": "DP 54. Partition Array for Maximum Sum | Front Partition", "d": "21:39"}, {"id": "tOylVCugy9k", "t": "DP 55. Maximum Rectangle Area with all 1's | DP on Rectangles", "d": "11:04"}, {"id": "auS1fynpnjo", "t": "DP 56. Count Square Submatrices with All Ones | DP on Rectangles", "d": "15:59"}, {"id": "Nq7ok-OyEpg", "t": "L1. Introduction to LinkedList | Traversal | Length | Search an Element", "d": "45:17"}, {"id": "VaECK03Dz-g", "t": "L2. Deletion and Insertion in LL | 8 Problems", "d": "56:30"}, {"id": "0eKMU10uEDI", "t": "L3. Introduction to Doubly LinkedList | Insertions and Deletions", "d": "1:04:07"}, {"id": "u3WUW2qe6ww", "t": "L4. Reverse a DLL | Multiple Approaches", "d": "18:30"}, {"id": "XmRrGzR6udg", "t": "L5. Add 2 numbers in LinkedList | Dummy Node Approach", "d": "14:48"}, {"id": "qf6qp7GzD5Q", "t": "L6. Odd Even Linked List | Multiple Approaches", "d": "24:05"}, {"id": "gRII7LhdJWc", "t": "L7. Sort a LinkedList of 0's, 1's and 2's | Multiple Approaches", "d": "23:23"}, {"id": "3kMKYQ2wNIU", "t": "L8. Remove Nth Node from the end of the LinkedList | Multiple Approaches", "d": "16:23"}, {"id": "D2vI2DNJGd8", "t": "L9. Reverse a LinkedList | Iterative and Recursive", "d": "32:42"}, {"id": "lRY_G-u_8jk", "t": "L10. Check if a LinkedList is Palindrome or Not | Multiple Approaches", "d": "20:02"}, {"id": "aXQWhbvT3w0", "t": "L11. Add 1 to a number represented by LinkedList", "d": "25:28"}, {"id": "0DYoPz2Tpt4", "t": "L12. Find the intersection point of Y LinkedList", "d": "32:05"}, {"id": "7LjQ57RqgEc", "t": "L13. Find the middle element of the LinkedList | Multiple Approaches", "d": "14:37"}, {"id": "wiOo4DC5GGA", "t": "L14. Detect a loop or cycle in LinkedList | With proof and Intuition", "d": "20:26"}, {"id": "I4g1qbkTPus", "t": "L15. Find the length of the Loop in LinkedList", "d": "14:01"}, {"id": "ePpV-_pfOeI", "t": "L16. Delete the middle node of the LinkedList", "d": "16:36"}, {"id": "2Kd0KKmmHFc", "t": "L17. Find the starting point of the Loop/Cycle in LinkedList | Multiple Approaches", "d": "22:42"}, {"id": "Mh0NH_SD92k", "t": "L18. Delete all occurrences of a Key in DLL", "d": "11:13"}, {"id": "YitR4dQsddE", "t": "L19. Find all Pairs with given Sum in DLL", "d": "14:14"}, {"id": "YJKVTnOJXSY", "t": "L20. Remove duplicates from sorted DLL", "d": "12:53"}, {"id": "lIar1skcQYI", "t": "L21. Reverse Nodes in K Group Size of LinkedList", "d": "24:31"}, {"id": "uT7YI7XbTY8", "t": "L22. Rotate a LinkedList", "d": "12:10"}, {"id": "jXu-H7XuClE", "t": "L23. Merge two sorted Linked Lists", "d": "18:55"}, {"id": "ykelywHJWLg", "t": "L24. Flattening a LinkedList | Multiple Approaches with Dry Run", "d": "32:58"}, {"id": "1zktEppsdig", "t": "L25. Merge K Sorted Lists | Multiple Approaches", "d": "30:02"}, {"id": "8ocB7a_c-Cc", "t": "L26. Sort a Linked List | Merge Sort and Brute Force", "d": "22:11"}, {"id": "q570bKdrnlw", "t": "L27. Clone a LinkedList with Next and Random Pointers | Copy List with Random Pointers", "d": "33:00"}, {"id": "mG3KLugbOdc", "t": "L28. Design a Browser History | LinkedList Implementation", "d": "14:38"}, {"id": "Ae_Ag_saG9s", "t": "L2. Print all Divisors of a Number", "d": "9:10"}, {"id": "MJcckSfoYdI", "t": "L3. Check if a Number if Prime or not", "d": "7:10"}, {"id": "LT7XhVdeRyg", "t": "L4. Print all prime factors of a Number", "d": "18:53"}, {"id": "hFWckDXE-K8", "t": "L5. Power Exponentiation", "d": "12:39"}, {"id": "g5Fuxn_AvSk", "t": "L6. Sieve of Eratosthenes", "d": "18:27"}, {"id": "os82DjD2-MA", "t": "L7. Count Prime in a range L-R", "d": "16:39"}, {"id": "glKWkmKFlMw", "t": "L8. Smallest Prime Factor (SPF) | Prime Factorisation | Query Based Problem", "d": "16:57"}, {"id": "9kdHxplyl5I", "t": "L1. Introduction to Sliding Window and 2 Pointers | Templates | Patterns", "d": "36:55"}, {"id": "pBWCOCS636U", "t": "L2. Maximum Points You Can Obtain from Cards", "d": "11:13"}, {"id": "-zSxTJkcdAo", "t": "L3. Longest Substring Without Repeating Characters", "d": "23:09"}, {"id": "3E4JBHSLpYk", "t": "L4. Max Consecutive Ones III", "d": "29:58"}, {"id": "e3bs0uA1NhQ", "t": "L5. Fruit Into Baskets", "d": "30:02"}, {"id": "teM9ZsVRQyc", "t": "L6. Longest Substring With At Most K Distinct Characters", "d": "21:32"}, {"id": "xtqN4qlgr8s", "t": "L7. Number of Substrings Containing All Three Characters", "d": "19:40"}, {"id": "_eNhaDCr6P0", "t": "L8. Longest Repeating Character Replacement", "d": "25:21"}, {"id": "XnMdNUkX6VM", "t": "L9. Binary Subarrays With Sum", "d": "20:27"}, {"id": "j_QOv9OT9Og", "t": "L10. Count number of Nice subarrays", "d": "4:54"}, {"id": "7wYGbV_LsX4", "t": "L11. Subarray with k different integers", "d": "20:49"}, {"id": "WJaij9ffOIY", "t": "L12. Minimum Window Substring", "d": "27:06"}, {"id": "DIX2p7vb9co", "t": "L1. Assign Cookies", "d": "10:51"}, {"id": "3-QbX1iDbXs", "t": "L3. Shortest Job First (or SJF) CPU Scheduling", "d": "7:20"}, {"id": "n_tmibEhO6Q", "t": "L2. Lemonade Change", "d": "9:00"}, {"id": "tZAa_jJ3SwQ", "t": "L4. Jump Game - I", "d": "10:53"}, {"id": "7SBVnw7GSTk", "t": "L5. Jump Game - II", "d": "16:45"}, {"id": "QbwltemZbRg", "t": "L6. Job Sequencing Problem", "d": "16:07"}, {"id": "mKfhTotEguk", "t": "L7. N Meeting in One Room", "d": "13:12"}, {"id": "HDHQ8lAWakY", "t": "L8. Non Overlapping Intervals", "d": "8:46"}, {"id": "xxRE-46OCC8", "t": "L9. Insert Intervals", "d": "13:16"}, {"id": "AsGzwR_FWok", "t": "L10. Minimum number of platforms required in a railway station", "d": "18:10"}, {"id": "cHT6sG_hUZI", "t": "L11. Valid Parenthesis String | Multiple Approaches", "d": "26:09"}, {"id": "1ibsQrnuEEg", "t": "L13. Fractional Knapsack Algorithm", "d": "18:41"}, {"id": "IIqVFvKE6RY", "t": "L12. Candy | Slope Approach Intuition Based", "d": "30:10"}, {"id": "tqQ5fTamIN4", "t": "L1. Introduction to Stack and Queue | Implementation using Data Structures", "d": "1:05:06"}, {"id": "xwjS0iZhw4I", "t": "L2. Check for Balanced Parentheses", "d": "12:28"}, {"id": "4pIc9UBHJtk", "t": "L3. Prefix, Infix, and Postfix Conversion", "d": "50:47"}, {"id": "NdDIaH91P0g", "t": "L4. Implement Min Stack", "d": "20:55"}, {"id": "e7XQLtOQM3I", "t": "L5. Next Greater Element", "d": "18:25"}, {"id": "7PrncD7v9YQ", "t": "L6. Next Greater Element - II", "d": "15:41"}, {"id": "zMdbdGJNlh4", "t": "L7. Previous Smaller Element", "d": "8:11"}, {"id": "1_5VuquLbXg", "t": "L8. Trapping Rainwater | 2 Approaches", "d": "28:58"}, {"id": "v0e8p9JCgRc", "t": "L9. Sum of Subarray Minimum", "d": "23:35"}, {"id": "gIrMptNPf5M", "t": "L10. Sum of subarray ranges", "d": "10:34"}, {"id": "_eYGqw_VDR4", "t": "L11. Aestroid Collisions", "d": "17:29"}, {"id": "Bzat9vgD0fs", "t": "L12. Largest Rectangle in Histogram", "d": "31:42"}, {"id": "ttVu6G7Ayik", "t": "L13. Maximal Rectangle", "d": "12:12"}, {"id": "jmbuRzYPGrg", "t": "L14. Remove K Digits", "d": "15:29"}, {"id": "eay-zoSRkVc", "t": "L15. Stock Span Problem", "d": "19:21"}, {"id": "NwBvene4Imo", "t": "L16. Sliding Window Maximum", "d": "19:58"}, {"id": "cEadsbTeze4", "t": "L17. The Celebrity Problem", "d": "16:17"}, {"id": "z9bJUPxzFOw", "t": "L18. Implement LRU Cache", "d": "24:56"}, {"id": "mzqHlAW7jeE", "t": "Implement LFU cache in C++/Java | Leetcode(Hard)", "d": "17:44"}];
+const SECTIONS = [{"name": "Basics", "from": 0, "to": 6}, {"name": "Recursion", "from": 7, "to": 11}, {"name": "Hashing & Sorting", "from": 12, "to": 15}, {"name": "Arrays", "from": 16, "to": 43}, {"name": "Binary Search", "from": 44, "to": 71}, {"name": "Trees", "from": 72, "to": 124}, {"name": "Graphs", "from": 125, "to": 180}, {"name": "Dynamic Programming", "from": 181, "to": 235}, {"name": "Linked List", "from": 236, "to": 263}, {"name": "Maths", "from": 264, "to": 270}, {"name": "Sliding Window & 2 Pointers", "from": 271, "to": 282}, {"name": "Greedy", "from": 283, "to": 295}, {"name": "Stack & Queue", "from": 296, "to": 314}];
+
+/* ---------- storage (safe) ---------- */
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem('dsa.'+k); return v==null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem('dsa.'+k, JSON.stringify(v)); }catch(e){} }
+};
+let watched = new Set(store.get('watched', []));
+let pos = store.get('pos', {});
+let curIdx = Math.max(0, LECTURES.findIndex(l => l.id === store.get('last', LECTURES[0].id)));
+let speed = store.get('speed', 1);
+let autoNext = store.get('autonext', true);
+let filter = 'all';  // 'all' | 'todo' | section index
+let query = '';
+
+const $ = id => document.getElementById(id);
+const pw = $('pw');
+const fmt = s => { s = Math.max(0, Math.floor(s||0)); const h = Math.floor(s/3600), m = Math.floor(s%3600/60), x = s%60; return (h? h+':'+String(m).padStart(2,'0') : m) + ':' + String(x).padStart(2,'0'); };
+const toSec = d => d.split(':').reduce((a,b)=>a*60+(+b),0);
+const secOf = i => SECTIONS.findIndex(s => i >= s.from && i <= s.to);
+
+/* ---------- list UI ---------- */
+function renderChips(){
+  const c = $('chips'); c.innerHTML = '';
+  const mk = (label, val) => { const b = document.createElement('button'); b.className = 'chip' + (filter===val?' on':''); b.textContent = label; b.onclick = () => { filter = val; renderChips(); renderList(); $('list').scrollIntoView({block:'start', behavior:'smooth'}); }; c.appendChild(b); };
+  mk('All', 'all'); mk('Not watched', 'todo');
+  SECTIONS.forEach((s, i) => mk(s.name, i));
+}
+const CHECK = '<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
+function renderList(){
+  const list = $('list'); list.innerHTML = '';
+  const q = query.trim().toLowerCase();
+  let shown = 0;
+  SECTIONS.forEach((s, si) => {
+    if (typeof filter === 'number' && filter !== si) return;
+    const items = [];
+    for (let i = s.from; i <= s.to; i++){
+      const l = LECTURES[i];
+      if (filter === 'todo' && watched.has(l.id)) continue;
+      if (q && !(l.t.toLowerCase().includes(q) || String(i+1) === q)) continue;
+      items.push(i);
+    }
+    if (!items.length) return;
+    let done = 0; for (let i = s.from; i <= s.to; i++) if (watched.has(LECTURES[i].id)) done++;
+    const h = document.createElement('div'); h.className = 'sec-h';
+    h.innerHTML = `<div>${s.name}</div><span>${done} / ${s.to - s.from + 1}</span>`;
+    list.appendChild(h);
+    items.forEach(i => { list.appendChild(itemEl(i)); shown++; });
+  });
+  if (!shown) list.innerHTML = '<div class="empty">No lectures match. Try another search or filter.</div>';
+}
+function itemEl(i){
+  const l = LECTURES[i];
+  const el = document.createElement('div');
+  el.className = 'item' + (i === curIdx ? ' now' : ''); el.tabIndex = 0; el.dataset.i = i;
+  const isDone = watched.has(l.id);
+  const p = pos[l.id] && !isDone ? Math.min(100, pos[l.id] / toSec(l.d) * 100) : 0;
+  el.innerHTML = `<div class="num">${i===curIdx?'▶':i+1}</div>
+    <div class="thumb"><img loading="lazy" alt="" src="https://i.ytimg.com/vi/${l.id}/mqdefault.jpg"><span class="dur">${l.d}</span>${p>2?`<i class="wbar" style="width:${p}%"></i>`:''}${isDone?`<div class="ok">${CHECK}</div>`:''}</div>
+    <div class="info"><h3></h3><p>Lecture ${i+1} · ${SECTIONS[secOf(i)].name}</p></div>
+    <button class="chk${isDone?' on':''}" aria-label="${isDone?'Mark as not done':'Mark as done'}"><i></i></button>`;
+  el.querySelector('h3').textContent = l.t;
+  el.onclick = e => { if (e.target.closest('.chk')) { toggleDone(i); return; } play(i, true); window.scrollTo({top:0, behavior:'smooth'}); };
+  el.onkeydown = e => { if (e.key === 'Enter') el.click(); };
+  return el;
+}
+function renderProgress(){
+  const n = watched.size, total = LECTURES.length;
+  const hrsLeft = LECTURES.filter(l => !watched.has(l.id)).reduce((a,l)=>a+toSec(l.d),0)/3600;
+  $('progTxt').textContent = `${n} / ${total} done · ${hrsLeft.toFixed(0)} h left`;
+  $('progBar').style.width = (n/total*100) + '%';
+  $('statTop').textContent = `${n} / ${total}`;
+}
+function renderDetails(){
+  const l = LECTURES[curIdx], s = SECTIONS[secOf(curIdx)];
+  $('vTitle').textContent = l.t;
+  $('vMeta').innerHTML = `<span>Lecture ${curIdx+1} of ${LECTURES.length}</span><span>·</span><span>${s.name}</span><span>·</span><span>${l.d}</span>`;
+  const d = watched.has(l.id);
+  $('bDone').classList.toggle('done', d);
+  $('bDone').querySelector('span').textContent = d ? 'Done' : 'Mark as done';
+  $('bPrev').disabled = $('cPrev').disabled = curIdx === 0;
+  $('bNext').disabled = $('cNext').disabled = curIdx === LECTURES.length - 1;
+  $('bAuto').setAttribute('aria-pressed', autoNext);
+  document.title = 'DSA · ' + (curIdx+1) + '. ' + l.t;
+}
+function refreshAll(){ renderDetails(); renderList(); renderProgress(); }
+function toggleDone(i, force){
+  const id = LECTURES[i].id;
+  const on = force ?? !watched.has(id);
+  if (on) watched.add(id); else watched.delete(id);
+  store.set('watched', [...watched]);
+  refreshAll();
+}
+
+/* ---------- player ---------- */
+let player, ready = false, playing = false, dur = 0, curT = 0, dragging = false, hideTimer, pendingPlay = false;
+function onYouTubeIframeAPIReady(){
+  const l = LECTURES[curIdx];
+  player = new YT.Player('yt', {
+    host: 'https://www.youtube-nocookie.com',
+    videoId: l.id,
+    playerVars: { controls:0, rel:0, modestbranding:1, playsinline:1, iv_load_policy:3, disablekb:1, fs:0, cc_load_policy:0, start: Math.floor(pos[l.id]||0) },
+    events: {
+      onReady: () => { ready = true; $('hint').hidden = true; player.setPlaybackRate(speed); tick(); },
+      onStateChange: onState,
+      onError: e => toast('This video can\'t play here (error ' + e.data + ')')
+    }
+  });
+}
+window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+function onState(e){
+  const S = YT.PlayerState;
+  playing = e.data === S.PLAYING;
+  pw.classList.toggle('is-paused', e.data === S.PAUSED || e.data === S.CUED || e.data === -1);
+  pw.classList.toggle('ended', e.data === S.ENDED);
+  $('playPath').setAttribute('d', playing ? 'M6 19h4V5H6v14zm8-14v14h4V5h-4z' : 'M8 5v14l11-7z');
+  $('cPlay').setAttribute('aria-label', playing ? 'Pause' : 'Play');
+  if (playing){ $('tap').classList.remove('through'); pendingPlay = false; player.setPlaybackRate(speed); scheduleHide(); }
+  else showUI(false);
+  if (e.data === S.ENDED){
+    toggleDone(curIdx, true);
+    pos[LECTURES[curIdx].id] = 0; store.set('pos', pos);
+    if (autoNext && curIdx < LECTURES.length - 1){ toast('Up next: lecture ' + (curIdx+2)); setTimeout(() => play(curIdx+1, true), 1200); }
+  }
+}
+function play(i, autoplay){
+  if (i < 0 || i >= LECTURES.length) return;
+  savePos();
+  curIdx = i; store.set('last', LECTURES[i].id);
+  const l = LECTURES[i];
+  const start = watched.has(l.id) ? 0 : Math.floor(pos[l.id] || 0);
+  curT = start; dur = toSec(l.d);
+  if (ready){
+    if (autoplay){ player.loadVideoById({videoId:l.id, startSeconds:start}); armFallback(); }
+    else player.cueVideoById({videoId:l.id, startSeconds:start});
+  }
+  refreshAll(); showUI(false);
+}
+// If the browser blocks programmatic play, let taps reach YouTube's own play button once.
+function armFallback(){
+  pendingPlay = true;
+  setTimeout(() => { if (pendingPlay && !playing){ $('tap').classList.add('through'); toast('Tap the video to start'); } }, 1800);
+}
+function togglePlay(){
+  if (!ready) return;
+  if (playing) player.pauseVideo(); else { player.playVideo(); armFallback(); }
+}
+function seekTo(t){ if (!ready) return; dur = player.getDuration() || dur; curT = Math.max(0, Math.min(dur - 0.5, t)); player.seekTo(curT, true); paintSeek(); }
+function seekBy(d){ seekTo((ready ? player.getCurrentTime() : curT) + d); }
+function savePos(){
+  if (!ready || !player.getCurrentTime) return;
+  const id = LECTURES[curIdx].id, t = player.getCurrentTime();
+  if (t > 5) { pos[id] = t; store.set('pos', pos); }
+}
+function tick(){
+  setInterval(() => {
+    if (!ready || !player.getCurrentTime) return;
+    if (!dragging) curT = player.getCurrentTime();
+    dur = player.getDuration() || dur;
+    paintSeek();
+    const id = LECTURES[curIdx].id;
+    if (playing && dur && curT / dur > 0.95 && !watched.has(id)) toggleDone(curIdx, true);
+  }, 250);
+  setInterval(savePos, 5000);
+}
+function paintSeek(){
+  const p = dur ? curT / dur * 100 : 0;
+  $('sFill').style.width = p + '%'; $('sKnob').style.left = p + '%';
+  try { $('sBuf').style.width = (player.getVideoLoadedFraction()*100) + '%'; } catch(e){}
+  $('tCur').textContent = fmt(curT); $('tDur').textContent = fmt(dur);
+}
+window.addEventListener('pagehide', savePos);
+document.addEventListener('visibilitychange', () => { if (document.hidden) savePos(); });
+
+/* ---------- controls visibility ---------- */
+function showUI(autoHide = true){ pw.classList.add('ui'); clearTimeout(hideTimer); if (autoHide && playing) scheduleHide(); }
+function hideUI(){ if (playing && !dragging && $('speedMenu').hidden) pw.classList.remove('ui'); }
+function scheduleHide(){ clearTimeout(hideTimer); hideTimer = setTimeout(hideUI, 3000); }
+
+/* ---------- double-tap to seek ---------- */
+let lastTap = 0, lastSide = '', singleTimer, seekMode = false, seekSide = '', accum = 0, seekEnd;
+$('tap').addEventListener('pointerup', e => {
+  if (e.pointerType === 'mouse' && e.button !== 0) return;
+  const r = pw.getBoundingClientRect(), x = (e.clientX - r.left) / r.width;
+  const side = x < 0.4 ? 'L' : x > 0.6 ? 'R' : 'C';
+  const now = Date.now();
+  if (!$('speedMenu').hidden){ $('speedMenu').hidden = true; return; }
+  if (seekMode && side === seekSide){ doSeek(side); return; }
+  if (now - lastTap < 300 && side === lastSide && side !== 'C'){
+    clearTimeout(singleTimer); lastTap = 0; seekMode = true; seekSide = side; accum = 0; doSeek(side); return;
+  }
+  if (now - lastTap < 300 && side === 'C' && e.pointerType === 'mouse'){ clearTimeout(singleTimer); lastTap = 0; toggleFs(); return; }
+  lastTap = now; lastSide = side;
+  clearTimeout(singleTimer);
+  singleTimer = setTimeout(() => {
+    if (e.pointerType === 'mouse') { togglePlay(); showUI(); }
+    else if (pw.classList.contains('ui') && playing) pw.classList.remove('ui');
+    else showUI();
+  }, 260);
+});
+pw.addEventListener('pointermove', e => { if (e.pointerType === 'mouse') showUI(); });
+function doSeek(side){
+  accum += 10;
+  seekBy(side === 'L' ? -10 : 10);
+  const el = side === 'L' ? $('rl') : $('rr'), other = side === 'L' ? $('rr') : $('rl');
+  other.classList.remove('show');
+  el.querySelector('.rtxt').textContent = accum + ' seconds';
+  el.classList.add('show');
+  pw.classList.remove('ui');
+  clearTimeout(seekEnd);
+  seekEnd = setTimeout(() => { seekMode = false; accum = 0; el.classList.remove('show'); }, 700);
+}
+
+/* ---------- seek bar ---------- */
+(() => {
+  const s = $('seek');
+  const at = e => { const r = s.getBoundingClientRect(); return Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)); };
+  s.addEventListener('pointerdown', e => { dragging = true; s.classList.add('drag'); s.setPointerCapture(e.pointerId); curT = at(e) * dur; paintSeek(); showUI(false); });
+  s.addEventListener('pointermove', e => { if (!dragging) return; curT = at(e) * dur; paintSeek(); });
+  const end = e => { if (!dragging) return; dragging = false; s.classList.remove('drag'); seekTo(at(e) * dur); scheduleHide(); };
+  s.addEventListener('pointerup', end); s.addEventListener('pointercancel', () => { dragging = false; s.classList.remove('drag'); });
+})();
+
+/* ---------- speed ---------- */
+const SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
+function renderSpeed(){
+  $('cSpeed').textContent = speed + 'x';
+  const m = $('speedMenu'); m.innerHTML = '';
+  SPEEDS.forEach(v => { const b = document.createElement('button'); b.textContent = v === 1 ? 'Normal' : v + 'x'; if (v === speed) b.className = 'on';
+    b.onclick = () => { speed = v; store.set('speed', v); if (ready) player.setPlaybackRate(v); m.hidden = true; renderSpeed(); toast(v + 'x speed'); scheduleHide(); }; m.appendChild(b); });
+}
+$('cSpeed').onclick = () => { $('speedMenu').hidden = !$('speedMenu').hidden; showUI(false); };
+
+/* ---------- fullscreen ---------- */
+async function toggleFs(){
+  const isFs = document.fullscreenElement || pw.classList.contains('fs');
+  if (isFs){
+    if (document.fullscreenElement) { try { await document.exitFullscreen(); } catch(e){} }
+    pw.classList.remove('fs'); document.body.classList.remove('lock');
+  } else {
+    let ok = false;
+    try { if (pw.requestFullscreen) { await pw.requestFullscreen({navigationUI:'hide'}); ok = true; } } catch(e){}
+    if (!ok) { pw.classList.add('fs'); document.body.classList.add('lock'); }
+    try { await screen.orientation.lock('landscape'); } catch(e){}
+  }
+  setTimeout(paintFs, 50);
+}
+function paintFs(){
+  const isFs = document.fullscreenElement || pw.classList.contains('fs');
+  $('fsPath').setAttribute('d', isFs ? 'M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z' : 'M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z');
+  if (!document.fullscreenElement) { try { screen.orientation.unlock(); } catch(e){} }
+}
+document.addEventListener('fullscreenchange', paintFs);
+$('cFs').onclick = toggleFs;
+
+/* ---------- toast ---------- */
+let toastT;
+function toast(msg){ const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 1600); }
+
+/* ---------- buttons ---------- */
+$('cPlay').onclick = () => { togglePlay(); };
+$('cPrev').onclick = $('bPrev').onclick = () => play(curIdx - 1, true);
+$('cNext').onclick = $('bNext').onclick = () => play(curIdx + 1, true);
+$('bDone').onclick = () => toggleDone(curIdx);
+$('bAuto').onclick = () => { autoNext = !autoNext; store.set('autonext', autoNext); renderDetails(); toast('Autoplay ' + (autoNext ? 'on' : 'off')); };
+$('bContinue').onclick = () => {
+  const cur = LECTURES[curIdx];
+  let i = (!watched.has(cur.id)) ? curIdx : LECTURES.findIndex(l => !watched.has(l.id));
+  if (i < 0) { toast('All lectures done!'); return; }
+  play(i, true); window.scrollTo({top:0, behavior:'smooth'});
+};
+$('q').addEventListener('input', e => { query = e.target.value; renderList(); });
+
+/* ---------- keyboard ---------- */
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  const k = e.key.toLowerCase();
+  if (k === ' ' || k === 'k'){ e.preventDefault(); togglePlay(); showUI(); }
+  else if (k === 'arrowright' || k === 'l'){ e.preventDefault(); seekMode = false; accum = 0; doSeek('R'); }
+  else if (k === 'arrowleft' || k === 'j'){ e.preventDefault(); seekMode = false; accum = 0; doSeek('L'); }
+  else if (k === 'f') toggleFs();
+  else if (k === 'n') play(curIdx + 1, true);
+  else if (k === 'p') play(curIdx - 1, true);
+  else if (k === 'escape' && pw.classList.contains('fs')) toggleFs();
+});
+
+/* ---------- boot ---------- */
+dur = toSec(LECTURES[curIdx].d); curT = pos[LECTURES[curIdx].id] || 0;
+renderChips(); renderSpeed(); refreshAll(); paintSeek();
+if (location.protocol === 'file:') { $('hint').hidden = false; $('hint').textContent = 'Open this page from a website link (not as a file) so YouTube can play.'; }
+else $('hint').hidden = false;
+const s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s);
+</script>
+</body>
+</html>
