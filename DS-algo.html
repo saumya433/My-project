@@ -107,6 +107,10 @@ svg{display:block}
 .toast.show{opacity:1}
 .hint{position:absolute;inset:auto 0 50% 0;transform:translateY(50%);z-index:6;text-align:center;font-size:13px;color:#fff;pointer-events:none}
 
+/* Ad mode: get out of the way so YouTube's Skip button can be tapped */
+.player-wrap.ad .paused-cover,.player-wrap.ad .ctrl,.player-wrap.ad .scrim{display:none!important}
+.player-wrap.ad .tap{pointer-events:none}
+.adbar{position:absolute;left:8px;top:8px;z-index:8;background:#ffd166;color:#111;font-size:12px;font-weight:700;padding:5px 10px;border-radius:12px;pointer-events:none}
 /* Fullscreen */
 .player-wrap.fs{position:fixed;inset:0;z-index:100;border-radius:0;aspect-ratio:auto;width:100vw;height:100vh;height:100dvh}
 .player-wrap:fullscreen{border-radius:0;aspect-ratio:auto;width:100%;height:100%}
@@ -198,30 +202,9 @@ body.lock{overflow:hidden}
 <div class="page">
   <main class="main">
     <div class="player-sticky">
-      <div class="player-wrap ui is-paused" id="pw">
-        <div id="yt"></div>
-        <div class="paused-cover"></div>
-        <div class="tap" id="tap"></div>
-        <div class="scrim"></div>
-        <div class="ripple l" id="rl"><div class="arrows"><span></span><span></span><span></span></div><div class="rtxt">10 seconds</div></div>
-        <div class="ripple r" id="rr"><div class="arrows"><span></span><span></span><span></span></div><div class="rtxt">10 seconds</div></div>
+      <div class="player-wrap" id="pw">
+        <iframe id="yt" title="Lecture video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
         <div class="toast" id="toast"></div>
-        <div class="hint" id="hint" hidden>Loading player…</div>
-        <div class="ctrl center">
-          <button class="sm" id="cPrev" aria-label="Previous lecture"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
-          <button class="big" id="cPlay" aria-label="Play"><svg viewBox="0 0 24 24"><path id="playPath" d="M8 5v14l11-7z"/></svg></button>
-          <button class="sm" id="cNext" aria-label="Next lecture"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
-        </div>
-        <div class="ctrl bar">
-          <div class="seek" id="seek"><div class="track"></div><div class="buf" id="sBuf"></div><div class="fill" id="sFill"></div><div class="knob" id="sKnob"></div></div>
-          <div class="row">
-            <span class="time"><span id="tCur">0:00</span> / <span id="tDur">0:00</span></span>
-            <span class="grow"></span>
-            <button class="pill" id="cSpeed" aria-label="Playback speed">1x</button>
-            <button class="icon" id="cFs" aria-label="Full screen"><svg viewBox="0 0 24 24"><path id="fsPath" d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg></button>
-          </div>
-        </div>
-        <div class="speed-menu" id="speedMenu" hidden></div>
       </div>
     </div>
     <div class="details">
@@ -233,7 +216,7 @@ body.lock{overflow:hidden}
         <button class="btn" id="bNext">Next lecture</button>
         <button class="btn toggle" id="bAuto" aria-pressed="true">Autoplay next</button>
       </div>
-      <div class="note"><b>Gestures:</b> double-tap right side to skip 10s forward, left side to go back 10s (keep tapping to skip more). Tap once to show controls. <b>Keyboard:</b> Space play/pause, ← → 10s, J/L 10s, F full screen, N next, P previous.</div>
+      <div class="note"><b>On the video:</b> double-tap right side to skip 10s forward, left side to go back 10s. Use the ⚙ gear for speed and the corner button for full screen. <b>Keyboard:</b> N next lecture, P previous.</div>
     </div>
   </main>
 
@@ -330,8 +313,8 @@ function renderDetails(){
   const d = watched.has(l.id);
   $('bDone').classList.toggle('done', d);
   $('bDone').querySelector('span').textContent = d ? 'Done' : 'Mark as done';
-  $('bPrev').disabled = $('cPrev').disabled = curIdx === 0;
-  $('bNext').disabled = $('cNext').disabled = curIdx === LECTURES.length - 1;
+  $('bPrev').disabled = curIdx === 0;
+  $('bNext').disabled = curIdx === LECTURES.length - 1;
   $('bAuto').setAttribute('aria-pressed', autoNext);
   document.title = 'DSA · ' + (curIdx+1) + '. ' + l.t;
 }
@@ -344,203 +327,82 @@ function toggleDone(i, force){
   refreshAll();
 }
 
-/* ---------- player ---------- */
-let player, ready = false, playing = false, dur = 0, curT = 0, dragging = false, hideTimer, pendingPlay = false;
-function onYouTubeIframeAPIReady(){
-  const l = LECTURES[curIdx];
-  player = new YT.Player('yt', {
-    host: 'https://www.youtube-nocookie.com',
-    videoId: l.id,
-    playerVars: { controls:0, rel:0, modestbranding:1, playsinline:1, iv_load_policy:3, disablekb:1, fs:0, cc_load_policy:0, start: Math.floor(pos[l.id]||0) },
-    events: {
-      onReady: () => { ready = true; $('hint').hidden = true; player.setPlaybackRate(speed); tick(); },
-      onStateChange: onState,
-      onError: e => toast('This video can\'t play here (error ' + e.data + ')')
-    }
-  });
+/* ---------- player ----------
+   The iframe is pointed straight at the lecture's own YouTube URL, so the video
+   that plays is always the one whose ID is in the list. The JS API is used only to
+   read progress (resume point, auto-mark done, autoplay next). */
+let ytp = null, apiReady = false;
+function srcFor(i, autoplay){
+  const l = LECTURES[i];
+  const start = watched.has(l.id) ? 0 : Math.floor(pos[l.id] || 0);
+  const p = new URLSearchParams({ enablejsapi:'1', rel:'0', playsinline:'1', modestbranding:'1', iv_load_policy:'3', start:String(start), origin: location.origin });
+  if (autoplay) p.set('autoplay','1');
+  return 'https://www.youtube.com/embed/' + l.id + '?' + p.toString();
 }
-window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
-function onState(e){
-  const S = YT.PlayerState;
-  playing = e.data === S.PLAYING;
-  pw.classList.toggle('is-paused', e.data === S.PAUSED || e.data === S.CUED || e.data === -1);
-  pw.classList.toggle('ended', e.data === S.ENDED);
-  $('playPath').setAttribute('d', playing ? 'M6 19h4V5H6v14zm8-14v14h4V5h-4z' : 'M8 5v14l11-7z');
-  $('cPlay').setAttribute('aria-label', playing ? 'Pause' : 'Play');
-  if (playing){ $('tap').classList.remove('through'); pendingPlay = false; player.setPlaybackRate(speed); scheduleHide(); }
-  else showUI(false);
-  if (e.data === S.ENDED){
-    toggleDone(curIdx, true);
-    pos[LECTURES[curIdx].id] = 0; store.set('pos', pos);
-    if (autoNext && curIdx < LECTURES.length - 1){ toast('Up next: lecture ' + (curIdx+2)); setTimeout(() => play(curIdx+1, true), 1200); }
-  }
+function attachApi(){
+  if (!apiReady) return;
+  try { ytp = new YT.Player('yt', { events: { onStateChange: onState } }); } catch(e){ ytp = null; }
 }
 function play(i, autoplay){
   if (i < 0 || i >= LECTURES.length) return;
   savePos();
   curIdx = i; store.set('last', LECTURES[i].id);
-  const l = LECTURES[i];
-  const start = watched.has(l.id) ? 0 : Math.floor(pos[l.id] || 0);
-  curT = start; dur = toSec(l.d);
-  if (ready){
-    if (autoplay){ player.loadVideoById({videoId:l.id, startSeconds:start}); armFallback(); }
-    else player.cueVideoById({videoId:l.id, startSeconds:start});
-  }
-  refreshAll(); showUI(false);
+  ytp = null;
+  $('yt').src = srcFor(i, autoplay);
+  attachApi();
+  refreshAll();
 }
-// If the browser blocks programmatic play, let taps reach YouTube's own play button once.
-function armFallback(){
-  pendingPlay = true;
-  setTimeout(() => { if (pendingPlay && !playing){ $('tap').classList.add('through'); toast('Tap the video to start'); } }, 1800);
-}
-function togglePlay(){
-  if (!ready) return;
-  if (playing) player.pauseVideo(); else { player.playVideo(); armFallback(); }
-}
-function seekTo(t){ if (!ready) return; dur = player.getDuration() || dur; curT = Math.max(0, Math.min(dur - 0.5, t)); player.seekTo(curT, true); paintSeek(); }
-function seekBy(d){ seekTo((ready ? player.getCurrentTime() : curT) + d); }
-function savePos(){
-  if (!ready || !player.getCurrentTime) return;
-  const id = LECTURES[curIdx].id, t = player.getCurrentTime();
-  if (t > 5) { pos[id] = t; store.set('pos', pos); }
-}
-function tick(){
-  setInterval(() => {
-    if (!ready || !player.getCurrentTime) return;
-    if (!dragging) curT = player.getCurrentTime();
-    dur = player.getDuration() || dur;
-    paintSeek();
+function onState(e){
+  if (e.data === 0){ // ended
     const id = LECTURES[curIdx].id;
-    if (playing && dur && curT / dur > 0.95 && !watched.has(id)) toggleDone(curIdx, true);
-  }, 250);
-  setInterval(savePos, 5000);
+    pos[id] = 0; store.set('pos', pos);
+    toggleDone(curIdx, true);
+    if (autoNext && curIdx < LECTURES.length - 1){ toast('Up next: lecture ' + (curIdx + 2)); setTimeout(() => play(curIdx + 1, true), 1500); }
+  }
 }
-function paintSeek(){
-  const p = dur ? curT / dur * 100 : 0;
-  $('sFill').style.width = p + '%'; $('sKnob').style.left = p + '%';
-  try { $('sBuf').style.width = (player.getVideoLoadedFraction()*100) + '%'; } catch(e){}
-  $('tCur').textContent = fmt(curT); $('tDur').textContent = fmt(dur);
+function savePos(){
+  try {
+    if (!ytp || !ytp.getCurrentTime) return;
+    // only trust the reading if the player is showing this lecture
+    const vd = ytp.getVideoData && ytp.getVideoData();
+    if (vd && vd.video_id && vd.video_id !== LECTURES[curIdx].id) return;
+    const t = ytp.getCurrentTime(), d = ytp.getDuration();
+    const id = LECTURES[curIdx].id;
+    if (t > 5) { pos[id] = t; store.set('pos', pos); }
+    if (d && t / d > 0.95 && !watched.has(id)) toggleDone(curIdx, true);
+  } catch(e){}
 }
+setInterval(savePos, 5000);
 window.addEventListener('pagehide', savePos);
 document.addEventListener('visibilitychange', () => { if (document.hidden) savePos(); });
-
-/* ---------- controls visibility ---------- */
-function showUI(autoHide = true){ pw.classList.add('ui'); clearTimeout(hideTimer); if (autoHide && playing) scheduleHide(); }
-function hideUI(){ if (playing && !dragging && $('speedMenu').hidden) pw.classList.remove('ui'); }
-function scheduleHide(){ clearTimeout(hideTimer); hideTimer = setTimeout(hideUI, 3000); }
-
-/* ---------- double-tap to seek ---------- */
-let lastTap = 0, lastSide = '', singleTimer, seekMode = false, seekSide = '', accum = 0, seekEnd;
-$('tap').addEventListener('pointerup', e => {
-  if (e.pointerType === 'mouse' && e.button !== 0) return;
-  const r = pw.getBoundingClientRect(), x = (e.clientX - r.left) / r.width;
-  const side = x < 0.4 ? 'L' : x > 0.6 ? 'R' : 'C';
-  const now = Date.now();
-  if (!$('speedMenu').hidden){ $('speedMenu').hidden = true; return; }
-  if (seekMode && side === seekSide){ doSeek(side); return; }
-  if (now - lastTap < 300 && side === lastSide && side !== 'C'){
-    clearTimeout(singleTimer); lastTap = 0; seekMode = true; seekSide = side; accum = 0; doSeek(side); return;
-  }
-  if (now - lastTap < 300 && side === 'C' && e.pointerType === 'mouse'){ clearTimeout(singleTimer); lastTap = 0; toggleFs(); return; }
-  lastTap = now; lastSide = side;
-  clearTimeout(singleTimer);
-  singleTimer = setTimeout(() => {
-    if (e.pointerType === 'mouse') { togglePlay(); showUI(); }
-    else if (pw.classList.contains('ui') && playing) pw.classList.remove('ui');
-    else showUI();
-  }, 260);
-});
-pw.addEventListener('pointermove', e => { if (e.pointerType === 'mouse') showUI(); });
-function doSeek(side){
-  accum += 10;
-  seekBy(side === 'L' ? -10 : 10);
-  const el = side === 'L' ? $('rl') : $('rr'), other = side === 'L' ? $('rr') : $('rl');
-  other.classList.remove('show');
-  el.querySelector('.rtxt').textContent = accum + ' seconds';
-  el.classList.add('show');
-  pw.classList.remove('ui');
-  clearTimeout(seekEnd);
-  seekEnd = setTimeout(() => { seekMode = false; accum = 0; el.classList.remove('show'); }, 700);
-}
-
-/* ---------- seek bar ---------- */
-(() => {
-  const s = $('seek');
-  const at = e => { const r = s.getBoundingClientRect(); return Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)); };
-  s.addEventListener('pointerdown', e => { dragging = true; s.classList.add('drag'); s.setPointerCapture(e.pointerId); curT = at(e) * dur; paintSeek(); showUI(false); });
-  s.addEventListener('pointermove', e => { if (!dragging) return; curT = at(e) * dur; paintSeek(); });
-  const end = e => { if (!dragging) return; dragging = false; s.classList.remove('drag'); seekTo(at(e) * dur); scheduleHide(); };
-  s.addEventListener('pointerup', end); s.addEventListener('pointercancel', () => { dragging = false; s.classList.remove('drag'); });
-})();
-
-/* ---------- speed ---------- */
-const SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
-function renderSpeed(){
-  $('cSpeed').textContent = speed + 'x';
-  const m = $('speedMenu'); m.innerHTML = '';
-  SPEEDS.forEach(v => { const b = document.createElement('button'); b.textContent = v === 1 ? 'Normal' : v + 'x'; if (v === speed) b.className = 'on';
-    b.onclick = () => { speed = v; store.set('speed', v); if (ready) player.setPlaybackRate(v); m.hidden = true; renderSpeed(); toast(v + 'x speed'); scheduleHide(); }; m.appendChild(b); });
-}
-$('cSpeed').onclick = () => { $('speedMenu').hidden = !$('speedMenu').hidden; showUI(false); };
-
-/* ---------- fullscreen ---------- */
-async function toggleFs(){
-  const isFs = document.fullscreenElement || pw.classList.contains('fs');
-  if (isFs){
-    if (document.fullscreenElement) { try { await document.exitFullscreen(); } catch(e){} }
-    pw.classList.remove('fs'); document.body.classList.remove('lock');
-  } else {
-    let ok = false;
-    try { if (pw.requestFullscreen) { await pw.requestFullscreen({navigationUI:'hide'}); ok = true; } } catch(e){}
-    if (!ok) { pw.classList.add('fs'); document.body.classList.add('lock'); }
-    try { await screen.orientation.lock('landscape'); } catch(e){}
-  }
-  setTimeout(paintFs, 50);
-}
-function paintFs(){
-  const isFs = document.fullscreenElement || pw.classList.contains('fs');
-  $('fsPath').setAttribute('d', isFs ? 'M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z' : 'M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z');
-  if (!document.fullscreenElement) { try { screen.orientation.unlock(); } catch(e){} }
-}
-document.addEventListener('fullscreenchange', paintFs);
-$('cFs').onclick = toggleFs;
+window.onYouTubeIframeAPIReady = () => { apiReady = true; attachApi(); };
 
 /* ---------- toast ---------- */
 let toastT;
 function toast(msg){ const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 1600); }
 
 /* ---------- buttons ---------- */
-$('cPlay').onclick = () => { togglePlay(); };
-$('cPrev').onclick = $('bPrev').onclick = () => play(curIdx - 1, true);
-$('cNext').onclick = $('bNext').onclick = () => play(curIdx + 1, true);
+$('bPrev').onclick = () => play(curIdx - 1, true);
+$('bNext').onclick = () => play(curIdx + 1, true);
 $('bDone').onclick = () => toggleDone(curIdx);
 $('bAuto').onclick = () => { autoNext = !autoNext; store.set('autonext', autoNext); renderDetails(); toast('Autoplay ' + (autoNext ? 'on' : 'off')); };
 $('bContinue').onclick = () => {
   const cur = LECTURES[curIdx];
-  let i = (!watched.has(cur.id)) ? curIdx : LECTURES.findIndex(l => !watched.has(l.id));
+  const i = !watched.has(cur.id) ? curIdx : LECTURES.findIndex(l => !watched.has(l.id));
   if (i < 0) { toast('All lectures done!'); return; }
   play(i, true); window.scrollTo({top:0, behavior:'smooth'});
 };
 $('q').addEventListener('input', e => { query = e.target.value; renderList(); });
-
-/* ---------- keyboard ---------- */
 document.addEventListener('keydown', e => {
   if (e.target.tagName === 'INPUT') return;
   const k = e.key.toLowerCase();
-  if (k === ' ' || k === 'k'){ e.preventDefault(); togglePlay(); showUI(); }
-  else if (k === 'arrowright' || k === 'l'){ e.preventDefault(); seekMode = false; accum = 0; doSeek('R'); }
-  else if (k === 'arrowleft' || k === 'j'){ e.preventDefault(); seekMode = false; accum = 0; doSeek('L'); }
-  else if (k === 'f') toggleFs();
-  else if (k === 'n') play(curIdx + 1, true);
+  if (k === 'n') play(curIdx + 1, true);
   else if (k === 'p') play(curIdx - 1, true);
-  else if (k === 'escape' && pw.classList.contains('fs')) toggleFs();
 });
 
 /* ---------- boot ---------- */
-dur = toSec(LECTURES[curIdx].d); curT = pos[LECTURES[curIdx].id] || 0;
-renderChips(); renderSpeed(); refreshAll(); paintSeek();
-if (location.protocol === 'file:') { $('hint').hidden = false; $('hint').textContent = 'Open this page from a website link (not as a file) so YouTube can play.'; }
-else $('hint').hidden = false;
+renderChips(); refreshAll();
+$('yt').src = srcFor(curIdx, false);
 const s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s);
 </script>
 </body>
